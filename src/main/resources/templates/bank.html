@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+    <title>My Bank</title>
+</head>
+<body>
+<!-- Header -->
+<header class="w3-display-container w3-content w3-center" style="max-width:1500px">
+    <!--<img class="w3-image"  src="/static/IMG_1145.PNG" th:src = "@{/IMG_1145.PNG}" alt="Me" style="height: 400px">-->
+    <p class="w3-light-grey" style="height: 400px"></p>
+    <div class="w3-display-middle w3-padding-large w3-border w3-wide w3-text-light-grey w3-center">
+        <h1 class="w3-hide-medium w3-text-black w3-hide-small w3-xxxlarge">PLATFORM AS A SEVICE</h1>
+        <h5 class="w3-hide-large w3-text-black" style="white-space:nowrap">PLATFORM AS A SEVICE</h5>
+        <h3 class="w3-hide-medium w3-hide-small w3-text-black">SHEFFIELD</h3>
+    </div>
+
+    <div class="w3-bar w3-light-grey w3-round w3-display-bottommiddle" style="bottom:-16px">
+        <a href="index" class="w3-bar-item w3-button">Home</a>
+        <a class="w3-bar-item w3-button" th:if="${session.userId}" th:text="${session.userId}"></a>
+        <a href="logout" class="w3-bar-item w3-button" th:if="${session.userId}">Log out</a>
+        <a href="login" class="w3-bar-item w3-button"  th:unless="${session.userId != null}" >Login</a>
+        <a href="register" class="w3-bar-item w3-button"  th:unless="${session.userId != null}" >Register</a>
+        <a href="bank" class="w3-bar-item w3-button w3-black" th:if="${session.userId}">My Bank</a>
+        <a href="#uploadFile" class="w3-bar-item w3-button" th:if="${session.userId}">Upload</a>
+    </div>
+</header>
+
+<section class="w3-container w3-content" style="max-width:1400px;margin-top:80px">
+    <!-- Profile -->
+    <div class="w3-card w3-round w3-white">
+        <div class="w3-container">
+            <h4 class="w3-center">User Profile</h4>
+            <hr>
+            <p>Username: <span></span></p>
+            <p>Peanuts: <span></span></p>
+        </div>
+    </div>
+    <div>
+        <h2>Transaction Record</h2>
+        <p>Time: time</p>
+        <p>SourceApplication : project Name</p>
+        <p>From Username</p>
+        <p>Peanuts : -4</p>
+    </div>
+</section>
+
+
+
+<footer th:include="@{/footer} :: footerInfo"></footer>
+</body>
+</html>
