@@ -17,7 +17,7 @@ import com.sheffield.common.result.ActionResult;
 import com.sheffield.login.service.UserService;
 
 /**
- * 
+ *
  *
  * @author: wuyifan
  * @since: 2019年05月01日 19:07
@@ -30,44 +30,39 @@ public class LoginController {
     private UserService userService;
 
     @PostMapping("login")
-   // @ResponseBody
-    public ModelAndView login(HttpSession session, @RequestParam String userName, @RequestParam String password) {
-        ModelAndView mv = new ModelAndView();
+    @ResponseBody
+    public ActionResult<String> login(HttpSession session, @RequestParam String userName, @RequestParam String password) {
+        ActionResult.Builder<String> builder = new ActionResult.Builder<>();
         ActionResult<UserPo> login = userService.login(userName, password);
 
         if (!login.successful()) {
-            mv.setViewName("403");
-            return mv;
+            return builder.code(login.getCode()).message(login.getMessage()).build();
         }
         session.setAttribute("userId", login.getData().getUserId());
-        mv.setViewName("index");
-        return mv;
+        session.setAttribute("userName", login.getData().getUserName());
+        return builder.build();
     }
-    @GetMapping("register")
+
+    @GetMapping("toRegister")
     public ModelAndView toRegister(){
         return new ModelAndView("register");
     }
+
     @PostMapping("register")
-    //@ResponseBody
-    public ModelAndView register(HttpSession session, @RequestParam String userName, @RequestParam String password) {
-        ModelAndView mv = new ModelAndView();
-        ActionResult<UserPo> login = userService.register(userName, password);
-        session.setAttribute("userId", login.getData().getUserId());
-        if (!login.successful()) {
-            mv.setViewName("register");
-            return mv;
+    @ResponseBody
+    public ActionResult<String> register(HttpSession session, @RequestParam String userName, @RequestParam String password) {
+        ActionResult.Builder<String> builder = new ActionResult.Builder<>();
+        ActionResult<UserPo> register = userService.register(userName, password);
+
+        if (!register.successful()) {
+            return builder.code(register.getCode()).message(register.getMessage()).build();
         }
-
-        mv.setViewName("index");
-        return mv;
+        session.setAttribute("userId", register.getData().getUserId());
+        session.setAttribute("userName", register.getData().getUserName());
+        return builder.build();
     }
 
-    @RequestMapping(value = "/")
-    public ModelAndView index(){
-        return new ModelAndView("index");
-    }
-
-    @RequestMapping(value = "/login")
+    @RequestMapping(value = "/toLogin")
     public ModelAndView toLogin(){
         return new ModelAndView("login");
     }

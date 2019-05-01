@@ -12,12 +12,12 @@ import com.sheffield.common.result.ResultType;
 import com.sheffield.login.service.UserService;
 
 /**
- * 
+ *
  *
  * @author: wuyifan
  * @since: 2019年05月01日 19:19
  * @version 1.0
- */ 
+ */
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -28,6 +28,11 @@ public class UserServiceImpl implements UserService {
     public boolean isOnline(Integer userId) {
         UserPo userPo = baseDao.selectById(UserPo.class, userId);
         return userPo != null && LoginStatusEnum.ONLINE.getStatus().equals(userPo.getLoginStatus());
+    }
+
+    @Override
+    public UserPo getUser(Object userId) {
+        return baseDao.selectById(UserPo.class, userId);
     }
 
     @Override
@@ -55,9 +60,11 @@ public class UserServiceImpl implements UserService {
         UserPo userPo = new UserPo();
         userPo.setUserName(userName);
         if ((userPo = baseDao.selectOne(userPo)) == null) {
-            return builder.resultType(ResultType.FAILURE).message("user name is not existed").build();
+            return builder.resultType(ResultType.FAILURE).message("user name is not existed!").build();
         }
-
+        if (!userPo.getPassword().equals(password)) {
+            return builder.resultType(ResultType.FAILURE).message("password is wrong!").build();
+        }
         UserPo updateParam = new UserPo();
         updateParam.setUserId(userPo.getUserId());
         updateParam.setLoginStatus(LoginStatusEnum.ONLINE.getStatus());
