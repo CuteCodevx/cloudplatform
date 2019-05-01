@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sheffield.common.entity.po.ApplicationPo">
+	<resultMap id="BaseResultMap" type="com.sheffield.common.entity.po.ApplicationPo">
+		<id column="appilcation_id" property="appilcationId" />
+		<result column="user_id" property="userId" />
+		<result column="application_name" property="applicationName" />
+		<result column="file_url" property="fileUrl" />
+		<result column="image_url" property="imageUrl" />
+		<result column="link_url" property="linkUrl" />
+	</resultMap>
+
+	<sql id="Table_Name">
+		application
+	</sql>
+
+	<sql id="Base_Column">
+		appilcation_id,
+		user_id,
+		application_name,
+		file_url,
+		image_url,
+		link_url
+	</sql>
+
+	<sql id="Base_Where">
+	    <trim prefixOverrides="AND">
+		  <if test="appilcationId != null">
+            AND appilcation_id = #{appilcationId}
+		  </if>
+		  <if test="userId != null">
+            AND user_id = #{userId}
+		  </if>
+		  <if test="applicationName != null">
+            AND application_name = #{applicationName}
+		  </if>
+		  <if test="fileUrl != null">
+            AND file_url = #{fileUrl}
+		  </if>
+		  <if test="imageUrl != null">
+            AND image_url = #{imageUrl}
+		  </if>
+		  <if test="linkUrl != null">
+            AND link_url = #{linkUrl}
+		  </if>
+	    </trim>
+	</sql>
+	
+    <sql id="Base_Select">
+	    select
+		  <include refid="Base_Column" />
+		from
+		  <include refid="Table_Name" />
+		<where>
+		  <include refid="Base_Where" />
+		</where>
+	</sql>
+
+	<insert id="insert" parameterType="com.sheffield.common.entity.po.ApplicationPo" useGeneratedKeys="true" keyProperty="appilcationId">
+	    insert into <include refid="Table_Name" />
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+          <if test="appilcationId != null">
+            appilcation_id,
+          </if>
+          <if test="userId != null">
+            user_id,
+          </if>
+          <if test="applicationName != null">
+            application_name,
+          </if>
+          <if test="fileUrl != null">
+            file_url,
+          </if>
+          <if test="imageUrl != null">
+            image_url,
+          </if>
+          <if test="linkUrl != null">
+            link_url,
+          </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+	      <if test="appilcationId != null">
+		    #{appilcationId},
+	      </if>
+	      <if test="userId != null">
+		    #{userId},
+	      </if>
+	      <if test="applicationName != null">
+		    #{applicationName},
+	      </if>
+	      <if test="fileUrl != null">
+		    #{fileUrl},
+	      </if>
+	      <if test="imageUrl != null">
+		    #{imageUrl},
+	      </if>
+	      <if test="linkUrl != null">
+		    #{linkUrl},
+	      </if>
+        </trim>
+	</insert>
+	
+    <insert id="insertList" parameterType="java.util.List">
+	    insert into <include refid="Table_Name" />
+          (
+            user_id,
+            application_name,
+            file_url,
+            image_url,
+            link_url
+          ) 
+	      values
+	    <foreach collection="list" item="item" separator=",">
+          (
+            #{item.userId},
+            #{item.applicationName},
+            #{item.fileUrl},
+            #{item.imageUrl},
+            #{item.linkUrl}
+          )
+        </foreach>
+	</insert>
+
+	<update id="update" parameterType="com.sheffield.common.entity.po.ApplicationPo">
+	    update <include refid="Table_Name" />
+	    <set>
+        <if test="userId != null">
+          user_id = #{userId},
+        </if>
+        <if test="applicationName != null">
+          application_name = #{applicationName},
+        </if>
+        <if test="fileUrl != null">
+          file_url = #{fileUrl},
+        </if>
+        <if test="imageUrl != null">
+          image_url = #{imageUrl},
+        </if>
+        <if test="linkUrl != null">
+          link_url = #{linkUrl},
+        </if>
+	    </set>
+	    where appilcation_id = #{appilcationId}
+	</update>
+	
+	<select id="count" parameterType="com.sheffield.common.entity.po.ApplicationPo" resultType="java.lang.Integer">
+	    select count(1) from <include refid="Table_Name" />
+	    <where>
+	      <include refid="Base_Where" />
+	    </where>
+	</select>
+
+	<select id="selectOne" parameterType="com.sheffield.common.entity.po.ApplicationPo" resultMap="BaseResultMap">
+	    <include refid="Base_Select" />
+	</select>
+	
+	<select id="selectById" parameterType="Integer" resultMap="BaseResultMap">
+	    select 
+	    <include refid="Base_Column" />
+	    from <include refid="Table_Name" />
+	    where appilcation_id = #{appilcationId}
+	</select>
+
+	<select id="selectList" parameterType="com.sheffield.common.entity.po.ApplicationPo" resultMap="BaseResultMap">
+	    <include refid="Base_Select" />
+	</select>
+	
+	<delete id="deleteById" parameterType="Integer">
+	    delete from <include refid="Table_Name" />
+        where appilcation_id = #{appilcationId}
+	</delete>
+	
+</mapper>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+    <title>Register</title>
+</head>
+<body>
+<!--<div class="w3-container w3-padding-32 w3-center">-->
+<!--    <h4 th:text="${msg}"></h4>-->
+<!--</div>-->
+
+<form action="" method="post" class="w3-container w3-padding-64 w3-border">
+    <div class="w3-container">
+        <h2>Register Form</h2>
+    </div>
+    <p class="w3-container">
+        <label class="w3-section">Username: </label>
+        <input class="w3-input w3-section" type="email" name="userName" placeholder="please type your username"/></p>
+    <p class="w3-container">
+        <label class="w3-section">Password: </label>
+        <input class="w3-input w3-section" type="password" name="password" placeholder="please type your password"/></p>
+    <p class="w3-container">
+        <label class="w3-section">Repeat password: </label>
+        <input class="w3-input w3-section" type="password" name="password2" placeholder="please repeat your password"/></p>
+    <p class="w3-container"><button class="w3-btn w3-block w3-teal w3-section">Register</button></p>
+    <p class="w3-container"><a href="login">Already have account? Log In now</a></p>
+</form>
+
+</body>
+</html>

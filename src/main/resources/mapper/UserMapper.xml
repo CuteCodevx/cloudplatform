@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sheffield.common.entity.po.UserPo">
+	<resultMap id="BaseResultMap" type="com.sheffield.common.entity.po.UserPo">
+		<id column="user_id" property="userId" />
+		<result column="user_name" property="userName" />
+		<result column="password" property="password" />
+		<result column="login_status" property="loginStatus" />
+		<result column="user_count" property="userCount" />
+	</resultMap>
+
+	<sql id="Table_Name">
+		user
+	</sql>
+
+	<sql id="Base_Column">
+		user_id,
+		user_name,
+		password,
+		login_status,
+		user_count
+	</sql>
+
+	<sql id="Base_Where">
+	    <trim prefixOverrides="AND">
+		  <if test="userId != null">
+            AND user_id = #{userId}
+		  </if>
+		  <if test="userName != null">
+            AND user_name = #{userName}
+		  </if>
+		  <if test="password != null">
+            AND password = #{password}
+		  </if>
+		  <if test="loginStatus != null">
+            AND login_status = #{loginStatus}
+		  </if>
+		  <if test="userCount != null">
+            AND user_count = #{userCount}
+		  </if>
+	    </trim>
+	</sql>
+	
+    <sql id="Base_Select">
+	    select
+		  <include refid="Base_Column" />
+		from
+		  <include refid="Table_Name" />
+		<where>
+		  <include refid="Base_Where" />
+		</where>
+	</sql>
+
+	<insert id="insert" parameterType="com.sheffield.common.entity.po.UserPo" useGeneratedKeys="true" keyProperty="userId">
+	    insert into <include refid="Table_Name" />
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+          <if test="userId != null">
+            user_id,
+          </if>
+          <if test="userName != null">
+            user_name,
+          </if>
+          <if test="password != null">
+            password,
+          </if>
+          <if test="loginStatus != null">
+            login_status,
+          </if>
+          <if test="userCount != null">
+            user_count,
+          </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+	      <if test="userId != null">
+		    #{userId},
+	      </if>
+	      <if test="userName != null">
+		    #{userName},
+	      </if>
+	      <if test="password != null">
+		    #{password},
+	      </if>
+	      <if test="loginStatus != null">
+		    #{loginStatus},
+	      </if>
+	      <if test="userCount != null">
+		    #{userCount},
+	      </if>
+        </trim>
+	</insert>
+	
+    <insert id="insertList" parameterType="java.util.List">
+	    insert into <include refid="Table_Name" />
+          (
+            user_name,
+            password,
+            login_status,
+            user_count
+          ) 
+	      values
+	    <foreach collection="list" item="item" separator=",">
+          (
+            #{item.userName},
+            #{item.password},
+            #{item.loginStatus},
+            #{item.userCount}
+          )
+        </foreach>
+	</insert>
+
+	<update id="update" parameterType="com.sheffield.common.entity.po.UserPo">
+	    update <include refid="Table_Name" />
+	    <set>
+        <if test="userName != null">
+          user_name = #{userName},
+        </if>
+        <if test="password != null">
+          password = #{password},
+        </if>
+        <if test="loginStatus != null">
+          login_status = #{loginStatus},
+        </if>
+        <if test="userCount != null">
+          user_count = #{userCount},
+        </if>
+	    </set>
+	    where user_id = #{userId}
+	</update>
+	
+	<select id="count" parameterType="com.sheffield.common.entity.po.UserPo" resultType="java.lang.Integer">
+	    select count(1) from <include refid="Table_Name" />
+	    <where>
+	      <include refid="Base_Where" />
+	    </where>
+	</select>
+
+	<select id="selectOne" parameterType="com.sheffield.common.entity.po.UserPo" resultMap="BaseResultMap">
+	    <include refid="Base_Select" />
+	</select>
+	
+	<select id="selectById" parameterType="Integer" resultMap="BaseResultMap">
+	    select 
+	    <include refid="Base_Column" />
+	    from <include refid="Table_Name" />
+	    where user_id = #{userId}
+	</select>
+
+	<select id="selectList" parameterType="com.sheffield.common.entity.po.UserPo" resultMap="BaseResultMap">
+	    <include refid="Base_Select" />
+	</select>
+	
+	<delete id="deleteById" parameterType="Integer">
+	    delete from <include refid="Table_Name" />
+        where user_id = #{userId}
+	</delete>
+	
+</mapper>
