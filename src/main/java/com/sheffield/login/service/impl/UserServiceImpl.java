@@ -72,4 +72,13 @@ public class UserServiceImpl implements UserService {
 
         return builder.data(userPo).build();
     }
+
+    @Override
+    public void loginOut(Integer userId) {
+        UserPo po = new UserPo();
+        po.setUserId(userId);
+        po.setLoginStatus(LoginStatusEnum.OFFLINE.getStatus());
+
+        baseDao.update(po);
+    }
 }

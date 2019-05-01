@@ -43,6 +43,20 @@ public class LoginController {
         return builder.build();
     }
 
+    @GetMapping("loginOut")
+    public ModelAndView loginOut(HttpSession session){
+        Integer userId = (Integer) session.getAttribute("userId");
+
+        session.removeAttribute("userId");
+        session.removeAttribute("userName");
+
+        userService.loginOut(userId);
+
+        ModelAndView mv = new ModelAndView("login");
+
+        return mv;
+    }
+
     @GetMapping("register")
     public ModelAndView toRegister(){
         return new ModelAndView("register");

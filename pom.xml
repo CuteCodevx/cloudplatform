@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.sheffield</groupId>
-    <artifactId>cloudbase</artifactId>
+    <artifactId>cloudplatform</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>cloudbase</name>
     <description>Demo project for Spring Boot</description>

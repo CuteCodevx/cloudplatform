@@ -53,4 +53,6 @@ public interface UserService {
      */
     ActionResult<UserPo> login(String userName, String password);
 
+    void loginOut(Integer userId);
+
 }
