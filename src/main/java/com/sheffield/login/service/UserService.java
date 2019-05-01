@@ -4,12 +4,12 @@ import com.sheffield.common.entity.po.UserPo;
 import com.sheffield.common.result.ActionResult;
 
 /**
- * 
+ *
  *
  * @author: wuyifan
  * @since: 2019年05月01日 19:19
  * @version 1.0
- */ 
+ */
 public interface UserService {
 
     /**
@@ -21,6 +21,16 @@ public interface UserService {
      * @date 2019年5月1日 19:22
      */
     boolean isOnline(Integer userId);
+
+    /**
+     * 获取用户信息
+     *
+     * @param userId userId
+     * @return com.sheffield.common.entity.po.UserPo
+     * @author wuyifan
+     * @date 2019年5月1日 23:16
+     */
+    UserPo getUser(Object userId);
 
     /**
      * 注册用户
