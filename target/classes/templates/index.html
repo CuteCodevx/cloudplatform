@@ -17,7 +17,7 @@
     </div>
 
     <div class="w3-bar w3-light-grey w3-round w3-display-bottommiddle" style="bottom:-16px">
-        <a href="index" class="w3-bar-item w3-button">Home</a>
+        <a href="index" class="w3-bar-item w3-butto w3-black">Home</a>
         <a class="w3-bar-item w3-button" th:if="${session.userId}" th:text="${session.userId}"></a>
         <a href="logout" class="w3-bar-item w3-button" th:if="${session.userId}">Log out</a>
         <a href="login" class="w3-bar-item w3-button"  th:unless="${session.userId != null}" >Login</a>
@@ -81,5 +81,6 @@
     </div>
 </section>
 <footer th:include="@{/footer} :: footerInfo"></footer>
+
 </body>
 </html>

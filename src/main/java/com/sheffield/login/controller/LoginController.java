@@ -30,7 +30,7 @@ public class LoginController {
     private UserService userService;
 
     @PostMapping("login")
-    @ResponseBody
+    //@ResponseBody
     public ActionResult<String> login(HttpSession session, @RequestParam String userName, @RequestParam String password) {
         ActionResult.Builder<String> builder = new ActionResult.Builder<>();
         ActionResult<UserPo> login = userService.login(userName, password);
@@ -43,13 +43,13 @@ public class LoginController {
         return builder.build();
     }
 
-    @GetMapping("toRegister")
+    @GetMapping("register")
     public ModelAndView toRegister(){
         return new ModelAndView("register");
     }
 
     @PostMapping("register")
-    @ResponseBody
+    //@ResponseBody
     public ActionResult<String> register(HttpSession session, @RequestParam String userName, @RequestParam String password) {
         ActionResult.Builder<String> builder = new ActionResult.Builder<>();
         ActionResult<UserPo> register = userService.register(userName, password);
@@ -62,7 +62,12 @@ public class LoginController {
         return builder.build();
     }
 
-    @RequestMapping(value = "/toLogin")
+    @RequestMapping(value = "/index")
+    public ModelAndView toIndex(){
+        return new ModelAndView("index");
+    }
+
+    @RequestMapping(value = "/login")
     public ModelAndView toLogin(){
         return new ModelAndView("login");
     }

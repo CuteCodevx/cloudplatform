@@ -3,14 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <title>Register</title>
 </head>
 <body>
-<!--<div class="w3-container w3-padding-32 w3-center">-->
-<!--    <h4 th:text="${msg}"></h4>-->
-<!--</div>-->
-
-<form action="" method="post" class="w3-container w3-padding-64 w3-border">
+<form id="registerForm" class="w3-container w3-padding-64 w3-border">
     <div class="w3-container">
         <h2>Register Form</h2>
     </div>
@@ -26,6 +23,25 @@
     <p class="w3-container"><button class="w3-btn w3-block w3-teal w3-section">Register</button></p>
     <p class="w3-container"><a href="login">Already have account? Log In now</a></p>
 </form>
-
+<script>
+    $(function () {
+        $('#registerForm').submit(function () {
+            $.ajax({
+                async:false,
+                url:'register',
+                type:'post',
+                data:$('#registerForm').serialize(),
+                dataType:"text",
+                success:function (code,message) {
+                    alert(message);
+                    location.href="/login";
+                },
+                error:function (code,message) {
+                    alert(message);
+                }
+            })
+        });
+    })
+</script>
 </body>
 </html>
