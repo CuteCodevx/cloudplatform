@@ -29,9 +29,9 @@ public class ApplicationPo implements Serializable {
 	private String applicationName;
 
 	/**
-	 * desc: desc
+	 * description: description
 	 */
-	private String desc;
+	private String description;
 
 	/**
 	 * fileUrl: file_url
@@ -75,12 +75,12 @@ public class ApplicationPo implements Serializable {
 		this.applicationName = value;
 	}
 
-	public String getDesc() {
-		return this.desc;
+	public String getDescription() {
+		return this.description;
 	}
 
-	public void setDesc(String value) {
-		this.desc = value;
+	public void setDescription(String value) {
+		this.description = value;
 	}
 
 	public String getFileUrl() {

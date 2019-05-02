@@ -1,10 +1,13 @@
-package com.sheffield.login.service;
+package com.sheffield.application.service;
 
-/** 
+import com.github.pagehelper.PageInfo;
+import com.sheffield.common.entity.po.ApplicationPo;
+
+/**
  * 
  *
  * @author: wuyifan
- * @since: 2019年05月02日 2:16
+ * @since: 2019年05月02日 17:57
  * @version 1.0
  */ 
 public interface ApplicationService {
@@ -15,5 +18,8 @@ public interface ApplicationService {
                          String applicationName,
                          String desc,
                          Integer userId);
+
+
+    PageInfo<ApplicationPo> getApplicationList(Integer pageSize, Integer pageNum);
 
 }

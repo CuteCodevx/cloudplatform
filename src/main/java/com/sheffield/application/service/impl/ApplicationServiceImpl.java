@@ -1,18 +1,19 @@
-package com.sheffield.login.service.impl;
+package com.sheffield.application.service.impl;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageInfo;
+import com.sheffield.application.service.ApplicationService;
 import com.sheffield.common.dao.BaseDao;
 import com.sheffield.common.entity.po.ApplicationPo;
-import com.sheffield.login.service.ApplicationService;
 
 /**
  * 
  *
  * @author: wuyifan
- * @since: 2019年05月02日 2:17
+ * @since: 2019年05月02日 17:59
  * @version 1.0
  */ 
 @Service
@@ -29,7 +30,13 @@ public class ApplicationServiceImpl implements ApplicationService {
         applicationPo.setFileUrl(fileUrl);
         applicationPo.setImageUrl(imageUrl);
         applicationPo.setLinkUrl(linkUrl);
-        applicationPo.setDesc(desc);
+        applicationPo.setDescription(desc);
         baseDao.insert(applicationPo);
     }
+
+    @Override
+    public PageInfo<ApplicationPo> getApplicationList(Integer pageSize, Integer pageNum) {
+        return baseDao.selectPageListAndCount(ApplicationPo.class, "selectList", null, pageNum, pageSize);
+    }
+
 }

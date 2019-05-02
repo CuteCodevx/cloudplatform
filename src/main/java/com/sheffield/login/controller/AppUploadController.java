@@ -11,10 +11,13 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.sheffield.login.service.ApplicationService;
+import com.sheffield.application.service.ApplicationService;
+import com.sheffield.common.result.ActionResult;
+import com.sheffield.common.result.ResultType;
 
 @Controller
 public class AppUploadController {
@@ -24,16 +27,17 @@ public class AppUploadController {
 
     @RequestMapping(value = "/uploads", method = RequestMethod.POST)
     @ResponseBody
-    public String uploads(HttpServletRequest request,
-                          MultipartFile appFile,
-                          MultipartFile imageFile,
-                          String applicationName,
-                          String desc,
-                          String linkUrl) {
+    public ActionResult<String> uploads(HttpServletRequest request,
+                                @RequestParam("appFile") MultipartFile appFile,
+                                @RequestParam("imageFile") MultipartFile imageFile,
+                                String applicationName,
+                                String desc,
+                                String linkUrl) {
+        ActionResult.Builder<String> builder = new ActionResult.Builder<>();
         try {
             //上传目录地址
-            String imageDir = request.getSession().getServletContext().getRealPath("/") +"image/";
-            String fileDir = request.getSession().getServletContext().getRealPath("/") +"file/";
+            String imageDir = request.getSession().getServletContext().getRealPath("/") +"image\\";
+            String fileDir = request.getSession().getServletContext().getRealPath("/") +"file\\";
             HttpSession session = request.getSession();
             Integer userId = (Integer) session.getAttribute("userId");
 
@@ -61,16 +65,17 @@ public class AppUploadController {
         }catch (Exception e) {
             //打印错误堆栈信息
             e.printStackTrace();
-            return "上传失败";
+            return builder.code(ResultType.FAILURE.code()).message("upload file error").build();
         }
-        return "上传成功";
+
+        return builder.build();
     }
 
     private String executeUpload(String uploadDir, MultipartFile file) throws Exception {
         //文件后缀名
-        String suffix = Objects.requireNonNull(file.getOriginalFilename()).substring(file.getOriginalFilename().lastIndexOf("."));
+        // String suffix = Objects.requireNonNull(file.getOriginalFilename()).substring(file.getOriginalFilename().lastIndexOf("."));
         //上传文件名
-        String filename = UUID.randomUUID() + suffix;
+        String filename = file.getOriginalFilename();
         //服务器端保存的文件对象
         File serverFile = new File(uploadDir + filename);
         //将上传的文件写入到服务器端文件内

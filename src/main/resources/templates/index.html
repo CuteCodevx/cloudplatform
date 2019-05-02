@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head >
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Type" content="multipart/form-data; charset=utf-8" />
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.1/jquery.form.min.js"></script>
     <title>Title</title>
 </head>
 <body>
@@ -58,7 +61,7 @@
     <div class="w3-row-padding">
         <div class="w3-container w3-margin-bottom">
 
-            <form action="uploads" method="post" id="uploadForm">
+            <form action="uploads" method="post" id="uploadForm" enctype="multipart/form-data">
                 <p class="w3-container">
                     <label class="w3-section">Project Name: </label>
                     <input class="w3-input w3-section" type="text" name="applicationName" placeholder="please type your project name"/></p>
@@ -85,9 +88,14 @@
 </section>
 <footer th:include="@{/footer} :: footerInfo"></footer>
 <script>
-    // $(function () {
-    //     $('#uploadForm').
-    // })
+
+    $(function(){
+        $("#uploadForm").ajaxForm(function(data){
+            if(data.code == 200){
+                alert("upload success");
+            }
+        });
+    });
 </script>
 </body>
 </html>
