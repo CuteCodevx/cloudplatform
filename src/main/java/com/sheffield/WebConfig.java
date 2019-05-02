@@ -2,9 +2,11 @@ package com.sheffield;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -20,6 +22,11 @@ import com.sheffield.interceptor.LoginInterceptor;
 @Configuration
 public class WebConfig implements WebMvcConfigurer  {
 
+    @Value("${file.staticAccessPath}")
+    private String staticAccessPath;
+
+    @Value("${file.uploadFolder}")
+    private String uploadFolder;
 
     @Resource
     private LoginInterceptor loginInterceptor;
@@ -34,4 +41,11 @@ public class WebConfig implements WebMvcConfigurer  {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginInterceptor).addPathPatterns("/**").excludePathPatterns("/login","/register");
     }
+
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler(staticAccessPath).addResourceLocations("file:" + uploadFolder);
+    }
+
 }

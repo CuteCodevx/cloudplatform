@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,6 +26,12 @@ public class AppUploadController {
     @Resource
     private ApplicationService applicationService;
 
+    @Value("${file.uploadFolder}")
+    private String uploadFolder;
+
+    @Value("${file.staticAccessPath}")
+    private String staticAccessPath;
+
     @RequestMapping(value = "/uploads", method = RequestMethod.POST)
     @ResponseBody
     public ActionResult<String> uploads(HttpServletRequest request,
@@ -36,8 +43,8 @@ public class AppUploadController {
         ActionResult.Builder<String> builder = new ActionResult.Builder<>();
         try {
             //上传目录地址
-            String imageDir = request.getSession().getServletContext().getRealPath("/") +"image\\";
-            String fileDir = request.getSession().getServletContext().getRealPath("/") +"file\\";
+            String imageDir = uploadFolder + "/image/";
+            String fileDir = uploadFolder + "/file/";
             HttpSession session = request.getSession();
             Integer userId = (Integer) session.getAttribute("userId");
 
@@ -50,17 +57,18 @@ public class AppUploadController {
                 file.mkdir();
             }
 
-            String fileUlr = "";
-            if(appFile != null) {
-                fileUlr = executeUpload(fileDir, appFile);
-            }
-            String imageUrl = "";
-            if(imageFile != null) {
-                //调用上传方法
-                imageUrl = executeUpload(imageDir, imageFile);
+
+            if(appFile != null && imageFile != null) {
+                String imageName = UUID.randomUUID().toString().replace("-", "") + "-" + imageFile.getOriginalFilename();
+                String fileName = UUID.randomUUID().toString().replace("-", "") + "-" + appFile.getOriginalFilename();
+                executeUpload(fileDir + fileName, appFile);
+                executeUpload(imageDir + imageName, imageFile);
+                String url = "http://127.0.0.1:8080/" + staticAccessPath;
+                String imageUrl = url + "/image/" +  imageName;
+                String fileUrl = url + "/file/" + fileName;
+                applicationService.saveApplication(imageUrl, fileUrl, linkUrl, applicationName, desc, userId);
             }
 
-            applicationService.saveApplication(imageUrl, fileUlr, linkUrl, applicationName, desc, userId);
 
         }catch (Exception e) {
             //打印错误堆栈信息
@@ -71,17 +79,11 @@ public class AppUploadController {
         return builder.build();
     }
 
-    private String executeUpload(String uploadDir, MultipartFile file) throws Exception {
-        //文件后缀名
-        // String suffix = Objects.requireNonNull(file.getOriginalFilename()).substring(file.getOriginalFilename().lastIndexOf("."));
-        //上传文件名
-        String filename = file.getOriginalFilename();
+    private void executeUpload(String fileUrl, MultipartFile file) throws Exception {
         //服务器端保存的文件对象
-        File serverFile = new File(uploadDir + filename);
+        File serverFile = new File(fileUrl);
         //将上传的文件写入到服务器端文件内
         file.transferTo(serverFile);
-
-        return uploadDir + filename;
     }
 
 }
