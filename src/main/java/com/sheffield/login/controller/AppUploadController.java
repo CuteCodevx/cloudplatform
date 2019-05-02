@@ -63,8 +63,8 @@ public class AppUploadController {
                 String fileName = UUID.randomUUID().toString().replace("-", "") + "-" + appFile.getOriginalFilename();
                 executeUpload(fileDir + fileName, appFile);
                 executeUpload(imageDir + imageName, imageFile);
-                String url = "http://127.0.0.1:8080/" + staticAccessPath;
-                String imageUrl = url + "/image/" +  imageName;
+                String url = "http://127.0.0.1:8080/" + staticAccessPath.replace("*", "");
+                String imageUrl = url + "/image/" + imageName;
                 String fileUrl = url + "/file/" + fileName;
                 applicationService.saveApplication(imageUrl, fileUrl, linkUrl, applicationName, desc, userId);
             }
