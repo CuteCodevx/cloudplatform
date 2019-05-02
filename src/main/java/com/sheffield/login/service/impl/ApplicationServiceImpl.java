@@ -2,6 +2,8 @@ package com.sheffield.login.service.impl;
 
 import javax.annotation.Resource;
 
+import org.springframework.stereotype.Service;
+
 import com.sheffield.common.dao.BaseDao;
 import com.sheffield.common.entity.po.ApplicationPo;
 import com.sheffield.login.service.ApplicationService;
@@ -13,6 +15,7 @@ import com.sheffield.login.service.ApplicationService;
  * @since: 2019年05月02日 2:17
  * @version 1.0
  */ 
+@Service
 public class ApplicationServiceImpl implements ApplicationService {
 
     @Resource

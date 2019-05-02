@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Objects;
 import java.util.UUID;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.sheffield.login.service.ApplicationService;
 
 /**
  * 
@@ -22,6 +25,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class AppUploadController {
 
+    @Resource
+    private ApplicationService applicationService;
+
     /**
      * 上传多个文件
      * @param request 请求对象
@@ -30,7 +36,7 @@ public class AppUploadController {
      */
     @RequestMapping(value = "/uploads",method = RequestMethod.POST)
     @ResponseBody
-    public String uploads(HttpServletRequest request, MultipartFile[] files, String applicationName, String desc) {
+    public String uploads(HttpServletRequest request, MultipartFile[] files, String applicationName, String desc, String linkUrl) {
         try {
             //上传目录地址
             String imageDir = request.getSession().getServletContext().getRealPath("/") +"image/";
@@ -55,6 +61,8 @@ public class AppUploadController {
                 //调用上传方法
                 executeUpload(fileDir, files[1]);
             }
+
+            applicationService.saveApplication("", "", linkUrl, applicationName, desc, userId);
 
         }catch (Exception e) {
             //打印错误堆栈信息
