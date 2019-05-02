@@ -18,7 +18,7 @@
 
     <div class="w3-bar w3-light-grey w3-round w3-display-bottommiddle w3-hide-medium" style="bottom:-16px">
         <a href="index" class="w3-bar-item w3-button w3-black">Home</a>
-        <a class="w3-bar-item w3-button" th:if="${session.userId}" th:text="${session.userName}"></a>
+        <a class="w3-bar-item" th:if="${session.userId}" th:text="${session.userName}"></a>
         <a href="loginOut" class="w3-bar-item w3-button" th:if="${session.userId}">Log out</a>
         <a href="login" class="w3-bar-item w3-button"  th:unless="${session.userId != null}" >Login</a>
         <a href="register" class="w3-bar-item w3-button"  th:unless="${session.userId != null}" >Register</a>
@@ -43,7 +43,7 @@
     </div>
     <div class="w3-row-padding">
         <div class="w3-third w3-container w3-margin-bottom">
-            <img src="/static/jiayu3.png" th:src = "@{/jiayu3.png}" alt="Norway" style="width:100%" class="w3-hover-opacity">
+            <!--<img src="/static/jiayu3.png" th:src = "@{/jiayu3.png}" alt="Norway" style="width:100%" class="w3-hover-opacity">-->
             <div class="w3-container w3-white w3-center">
                 <p><b>Restaurant Guide</b></p>
                 <p>From Team18 by QIAN WEI</p>
@@ -58,28 +58,36 @@
     <div class="w3-row-padding">
         <div class="w3-container w3-margin-bottom">
 
-            <form action="" method="post">
+            <form action="uploads" method="post" id="uploadForm">
                 <p class="w3-container">
                     <label class="w3-section">Project Name: </label>
-                    <input class="w3-input w3-section" type="text" name="projectName" placeholder="please type your project name"/></p>
+                    <input class="w3-input w3-section" type="text" name="applicationName" placeholder="please type your project name"/></p>
                 <p class="w3-container">
                     <label class="w3-section">Description: </label>
-                    <input class="w3-input w3-section" type="text" name="description" placeholder="please type your description about your project"/></p>
+                    <input class="w3-input w3-section" type="text" name="desc" placeholder="please type your description about your project"/></p>
+                <p class="w3-container">
+                    <label class="w3-section">Link: </label>
+                    <input class="w3-input w3-section" type="text" name="linkUrl" placeholder="please type your project URL"/></p>
+
                 <p class="w3-container">
                     <!--<label class="w3-section">Choose File: </label>-->
-                    <input class="w3-input" type="file" name="fileUpload" />
-                    <input class="w3-button w3-margin-top w3-white w3-border w3-round-large"  type="submit" value="Upload File">
+                    <input class="w3-input" type="file" name="appFile" />
+                    <!--<input class="w3-button w3-margin-top w3-white w3-border w3-round-large"  type="submit" value="Upload File">-->
                 </p>
                 <p class="w3-container">
                     <!--<label class="w3-section">Choose File: </label>-->
-                    <input class="w3-input" type="file" name="fileUpload" />
-                    <input class="w3-button w3-margin-top w3-white w3-border w3-round-large"  type="submit" value="Upload Image">
+                    <input class="w3-input" type="file" name="imageFile" />
+                    <input class="w3-button w3-margin-top w3-white w3-border w3-round-large"  type="submit" value="Upload">
                 </p>
             </form>
         </div>
     </div>
 </section>
 <footer th:include="@{/footer} :: footerInfo"></footer>
-
+<script>
+    // $(function () {
+    //     $('#uploadForm').
+    // })
+</script>
 </body>
 </html>

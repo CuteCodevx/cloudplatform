@@ -32,7 +32,6 @@
                 success:function (data) {
                     var result = JSON.parse(data);
                     if (result.code == 200) {
-                        alert("register successful");
                         location.href='/index';
                     } else {
                        alert(result.message);
