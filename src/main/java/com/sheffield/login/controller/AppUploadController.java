@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sheffield.application.service.ApplicationService;
+import com.sheffield.common.ServerConfig;
 import com.sheffield.common.result.ActionResult;
 import com.sheffield.common.result.ResultType;
 
@@ -31,6 +32,9 @@ public class AppUploadController {
 
     @Value("${file.staticAccessPath}")
     private String staticAccessPath;
+
+    @Resource
+    private ServerConfig serverConfig;
 
     @RequestMapping(value = "/uploads", method = RequestMethod.POST)
     @ResponseBody
@@ -63,7 +67,7 @@ public class AppUploadController {
                 String fileName = UUID.randomUUID().toString().replace("-", "") + "-" + appFile.getOriginalFilename();
                 executeUpload(fileDir + fileName, appFile);
                 executeUpload(imageDir + imageName, imageFile);
-                String url = "http://127.0.0.1:8080/" + staticAccessPath.replace("*", "");
+                String url = serverConfig.getUrl() + staticAccessPath.replace("*", "");
                 String imageUrl = url + "/image/" + imageName;
                 String fileUrl = url + "/file/" + fileName;
                 applicationService.saveApplication(imageUrl, fileUrl, linkUrl, applicationName, desc, userId);
