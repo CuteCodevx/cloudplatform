@@ -10,21 +10,21 @@
 </head>
 <body>
 <!-- Header -->
-<header class="w3-display-container w3-content w3-center" style="max-width:1500px">
+<header class="w3-display-container w3-light-grey  w3-content w3-center" style="max-width:1500px">
     <!--<img class="w3-image"  src="/static/IMG_1145.PNG" th:src = "@{/IMG_1145.PNG}" alt="Me" style="height: 400px">-->
-    <p class="w3-light-grey" style="height: 400px"></p>
+    <p style="height: 400px; margin:0"></p>
     <div class="w3-display-middle w3-padding-large w3-border w3-wide w3-text-light-grey w3-center">
         <h1 class="w3-hide-medium w3-text-black w3-hide-small w3-xxxlarge">PLATFORM AS A SEVICE</h1>
         <h5 class="w3-hide-large w3-text-black" style="white-space:nowrap">PLATFORM AS A SEVICE</h5>
         <h3 class="w3-hide-medium w3-hide-small w3-text-black">SHEFFIELD</h3>
     </div>
 
-    <div class="w3-bar w3-light-grey w3-round w3-display-bottommiddle w3-hide-medium" style="bottom:-16px">
+    <div class="w3-bar w3-light-grey w3-round w3-display-bottommiddle w3-hide-small w3-hide-medium" style="bottom:-16px">
         <a href="index" class="w3-bar-item w3-button w3-black">Home</a>
         <a class="w3-bar-item" th:if="${session.userId}" th:text="${session.userName}"></a>
         <a href="loginOut" class="w3-bar-item w3-button" th:if="${session.userId}">Log out</a>
-        <a href="login" class="w3-bar-item w3-button"  th:unless="${session.userId != null}" >Login</a>
-        <a href="register" class="w3-bar-item w3-button"  th:unless="${session.userId != null}" >Register</a>
+        <!--<a href="login" class="w3-bar-item w3-button"  th:unless="${session.userId != null}" >Login</a>-->
+        <!--<a href="register" class="w3-bar-item w3-button"  th:unless="${session.userId != null}" >Register</a>-->
         <a href="bank" class="w3-bar-item w3-button" th:if="${session.userId}">My Bank</a>
         <a href="#uploadFile" class="w3-bar-item w3-button" th:if="${session.userId}">Upload</a>
     </div>
@@ -34,8 +34,8 @@
 <div class="w3-center w3-light-grey w3-padding-16 w3-hide-large">
     <div class="w3-bar w3-light-grey">
         <a href="index" class="w3-bar-item w3-button w3-black">Home</a>
-        <a href="login" class="w3-bar-item w3-button">Login</a>
-        <a href="register" class="w3-bar-item w3-button">Register</a>
+        <a class="w3-bar-item" th:if="${session.userId}" th:text="${session.userName}"></a>
+        <a href="loginOut" class="w3-bar-item w3-button" th:if="${session.userId}">Log out</a>
         <a href="bank" class="w3-bar-item w3-button">My Bank</a>
     </div>
 </div>
@@ -44,21 +44,13 @@
     <div class="w3-container w3-padding-24">
         <h2 class="w3-container">Application Tray</h2>
     </div>
-    <div class="w3-row-padding" id="applist">
-        <!--<div class="w3-third w3-container w3-margin-bottom">-->
-            <!--&lt;!&ndash;<a href=""><img src="/static/jiayu3.png" th:src = "@{/jiayu3.png}" alt="Norway" style="width:100%;height: 30%" class="w3-hover-opacity"></a>&ndash;&gt;-->
-            <!--<div class="w3-container w3-white w3-center">-->
-                <!--<p><b></b></p>-->
-                <!--<p></p>-->
-            <!--</div>-->
-        <!--</div>-->
-    </div>
+    <div class="w3-row-padding" id="applist"></div>
 
     <div class="w3-center w3-padding-32">
         <div class="w3-bar" id="showPage">
-            <a href="#" class="w3-bar-item w3-button w3-hover-black">«</a>
-            <a href="#" class="w3-bar-item w3-light-grey w3-button">1</a>
-            <a href="#" class="w3-bar-item w3-button w3-hover-black">»</a>
+            <a href="index" class="w3-bar-item w3-button w3-hover-black" id="prev">« prev</a>
+            <a class="w3-bar-item"><span id="pageNumber"></span>/<span id="total"></span></a>
+            <a href="index" class="w3-bar-item w3-button w3-hover-black" id="next">next »</a>
         </div>
     </div>
 
@@ -99,15 +91,24 @@
 
     $(function(){
         var pagesize = 6;
-        var pagenum = 2;
+        var pagenum=0;
+        //the current page
+        if(!localStorage.getItem('pageNum')){
+            $('#pageNumber').text('1');
+            pagenum=1;
+        }else{
+            $('#pageNumber').text(localStorage.getItem('pageNum'));
+            pagenum = parseInt($('#pageNumber').text());
+        }
+
         $.ajax({
-            url:"appList?pageSize="+pagesize+"&pageNum="+pagenum,
+            url:"appList?pageSize="+pagesize+"&pageNum="+pagenum+"",
             async:false,
             type:'get',
             dataType:"text",
             success:function (data) {
                 var result = JSON.parse(data);
-                alert(data);
+                console.log(data);
                 //object
                 var info = result.data;
                 //array: lots of  applist
@@ -126,7 +127,30 @@
                 `);
                 }
 
-                //$('#showPage').append(`<a href="#" class="w3-bar-item w3-light-grey w3-button"></a>`);
+                $('#total').text(info.navigatepageNums.length);
+                $('#next').click(function(){
+                    if(info.hasNextPage) {
+                        var m = info.nextPage;
+                        localStorage.setItem("pageNum",m);
+                    }
+                });
+
+                $('#prev').click(function () {
+                    //console.log(1);
+                    if(info.hasPreviousPage) {
+                        var m = info.prePage;
+                        localStorage.setItem("pageNum",m);
+                    }
+                })
+
+                if(info.isFirstPage){
+                    $('#prev').removeAttr('href');
+                    $('#prev').removeClass('w3-hover-black w3-button');
+                }
+                if(info.isLastPage){
+                    $('#next').removeAttr('href');
+                    $('#next').removeClass('w3-hover-black w3-button');
+                }
             }
 
         });
