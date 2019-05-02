@@ -36,6 +36,7 @@
                     var result = JSON.parse(data);
 
                     if (result.code == 200) {
+                        alert("register successful");
                         location.href='/login';
                     } else {
                         alert(result.message);
