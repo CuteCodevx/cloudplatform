@@ -5,6 +5,7 @@
 		<id column="appilcation_id" property="appilcationId" />
 		<result column="user_id" property="userId" />
 		<result column="application_name" property="applicationName" />
+		<result column="desc" property="desc" />
 		<result column="file_url" property="fileUrl" />
 		<result column="image_url" property="imageUrl" />
 		<result column="link_url" property="linkUrl" />
@@ -18,6 +19,7 @@
 		appilcation_id,
 		user_id,
 		application_name,
+		desc,
 		file_url,
 		image_url,
 		link_url
@@ -33,6 +35,9 @@
 		  </if>
 		  <if test="applicationName != null">
             AND application_name = #{applicationName}
+		  </if>
+		  <if test="desc != null">
+            AND desc = #{desc}
 		  </if>
 		  <if test="fileUrl != null">
             AND file_url = #{fileUrl}
@@ -68,6 +73,9 @@
           <if test="applicationName != null">
             application_name,
           </if>
+          <if test="desc != null">
+            desc,
+          </if>
           <if test="fileUrl != null">
             file_url,
           </if>
@@ -88,6 +96,9 @@
 	      <if test="applicationName != null">
 		    #{applicationName},
 	      </if>
+	      <if test="desc != null">
+		    #{desc},
+	      </if>
 	      <if test="fileUrl != null">
 		    #{fileUrl},
 	      </if>
@@ -105,6 +116,7 @@
           (
             user_id,
             application_name,
+            desc,
             file_url,
             image_url,
             link_url
@@ -114,6 +126,7 @@
           (
             #{item.userId},
             #{item.applicationName},
+            #{item.desc},
             #{item.fileUrl},
             #{item.imageUrl},
             #{item.linkUrl}
@@ -129,6 +142,9 @@
         </if>
         <if test="applicationName != null">
           application_name = #{applicationName},
+        </if>
+        <if test="desc != null">
+          desc = #{desc},
         </if>
         <if test="fileUrl != null">
           file_url = #{fileUrl},

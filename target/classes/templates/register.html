@@ -7,19 +7,19 @@
     <title>Register</title>
 </head>
 <body>
-<form id="registerForm" class="w3-container w3-padding-64 w3-border">
+<form id="registerForm" class="w3-container w3-padding-64 w3-border" onsubmit="return false">
     <div class="w3-container">
         <h2>Register Form</h2>
     </div>
     <p class="w3-container">
         <label class="w3-section">Username: </label>
-        <input class="w3-input w3-section" type="email" name="userName" placeholder="please type your username"/></p>
+        <input class="w3-input w3-section" type="email" name="userName" placeholder="please type your username" required/></p>
     <p class="w3-container">
         <label class="w3-section">Password: </label>
-        <input class="w3-input w3-section" type="password" name="password" placeholder="please type your password"/></p>
+        <input class="w3-input w3-section" type="password" name="password" placeholder="please type your password" required/></p>
     <p class="w3-container">
         <label class="w3-section">Repeat password: </label>
-        <input class="w3-input w3-section" type="password" name="password2" placeholder="please repeat your password"/></p>
+        <input class="w3-input w3-section" type="password" name="password2" placeholder="please repeat your password" required/></p>
     <p class="w3-container"><button class="w3-btn w3-block w3-teal w3-section">Register</button></p>
     <p class="w3-container"><a href="login">Already have account? Log In now</a></p>
 </form>
@@ -32,9 +32,14 @@
                 type:'post',
                 data:$('#registerForm').serialize(),
                 dataType:"text",
-                success:function (code,message) {
-                    alert(message);
-                    location.href="/login";
+                success:function (data) {
+                    var result = JSON.parse(data);
+
+                    if (result.code == 200) {
+                        location.href='/login';
+                    } else {
+                        alert(result.message);
+                    }
                 },
                 error:function (code,message) {
                     alert(message);

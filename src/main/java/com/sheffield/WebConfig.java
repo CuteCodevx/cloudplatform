@@ -30,8 +30,8 @@ public class WebConfig implements WebMvcConfigurer  {
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
     }
 
-//    @Override
-//    public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(loginInterceptor).addPathPatterns("/**").excludePathPatterns("/login","/register");
-//    }
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(loginInterceptor).addPathPatterns("/**").excludePathPatterns("/login","/register");
+    }
 }

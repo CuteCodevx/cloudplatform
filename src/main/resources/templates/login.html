@@ -7,16 +7,16 @@
     <title>Login</title>
 </head>
 <body>
-<form id="loginForm" class="w3-container w3-padding-64 w3-border">
+<form id="loginForm" class="w3-container w3-padding-64 w3-border" onsubmit="return false">
     <div class="w3-container">
         <h2>LogIn Form</h2>
     </div>
     <p class="w3-container">
         <label class="w3-section">username: </label>
-        <input class="w3-input w3-section" type="text" name="userName" placeholder="please type your username"/></p>
+        <input class="w3-input w3-section" type="text" name="userName" placeholder="please type your username" required/></p>
     <p class="w3-container">
         <label class="w3-section">password: </label>
-        <input class="w3-input w3-section" type="password" name="password" placeholder="please type your password"/></p>
+        <input class="w3-input w3-section" type="password" name="password" placeholder="please type your password" required/></p>
     <p class="w3-container"><button class="w3-btn w3-block w3-teal w3-section">LogIn</button></p>
     <p class="w3-container"><a href="register">No have account? Register now</a></p>
 </form>
@@ -29,12 +29,14 @@
                 type:'post',
                 data:$('#loginForm').serialize(),
                 dataType:"text",
-                success:function (code,message) {
-                    //alert(message);
-                    location.href='/index';
-                },
-                error:function (code,message) {
-                    alert(message);
+                success:function (data) {
+                    var result = JSON.parse(data);
+                    if (result.code == 200) {
+                        alert("register successful");
+                        location.href='/index';
+                    } else {
+                       alert(result.message);
+                    }
                 }
             })
         });
