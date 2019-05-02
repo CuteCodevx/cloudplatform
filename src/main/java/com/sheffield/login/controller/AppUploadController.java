@@ -15,28 +15,20 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.sheffield.login.service.ApplicationService;
 
-/**
- * 
- *
- * @author: wuyifan
- * @since: 2019年05月02日 2:07
- * @version 1.0
- */ 
 
 public class AppUploadController {
 
     @Resource
     private ApplicationService applicationService;
 
-    /**
-     * 上传多个文件
-     * @param request 请求对象
-     * @param file 上传文件集合
-     * @return
-     */
-    @RequestMapping(value = "/uploads",method = RequestMethod.POST)
+    @RequestMapping(value = "/uploads", method = RequestMethod.POST)
     @ResponseBody
-    public String uploads(HttpServletRequest request, MultipartFile[] files, String applicationName, String desc, String linkUrl) {
+    public String uploads(HttpServletRequest request,
+                          MultipartFile appFile,
+                          MultipartFile imageFile,
+                          String applicationName,
+                          String desc,
+                          String linkUrl) {
         try {
             //上传目录地址
             String imageDir = request.getSession().getServletContext().getRealPath("/") +"image/";
@@ -48,21 +40,22 @@ public class AppUploadController {
             if(!image.exists()) {
                 image.mkdir();
             }
-            if(files[0] != null) {
-                //调用上传方法
-                executeUpload(imageDir, files[0]);
-            }
-
             File file = new File(fileDir);
             if(!file.exists()) {
                 file.mkdir();
             }
-            if(files[1] != null) {
+
+            String fileUlr = "";
+            if(appFile != null) {
+                fileUlr = executeUpload(fileDir, appFile);
+            }
+            String imageUrl = "";
+            if(imageFile != null) {
                 //调用上传方法
-                executeUpload(fileDir, files[1]);
+                imageUrl = executeUpload(imageDir, imageFile);
             }
 
-            applicationService.saveApplication("", "", linkUrl, applicationName, desc, userId);
+            applicationService.saveApplication(imageUrl, fileUlr, linkUrl, applicationName, desc, userId);
 
         }catch (Exception e) {
             //打印错误堆栈信息
@@ -72,13 +65,7 @@ public class AppUploadController {
         return "上传成功";
     }
 
-    /**
-     * 提取上传方法为公共方法
-     * @param uploadDir 上传文件目录
-     * @param file 上传对象
-     * @throws Exception
-     */
-    private void executeUpload(String uploadDir, MultipartFile file) throws Exception {
+    private String executeUpload(String uploadDir, MultipartFile file) throws Exception {
         //文件后缀名
         String suffix = Objects.requireNonNull(file.getOriginalFilename()).substring(file.getOriginalFilename().lastIndexOf("."));
         //上传文件名
@@ -87,6 +74,8 @@ public class AppUploadController {
         File serverFile = new File(uploadDir + filename);
         //将上传的文件写入到服务器端文件内
         file.transferTo(serverFile);
+
+        return uploadDir + filename;
     }
 
 }
