@@ -65,7 +65,7 @@ public class ApplicationServiceImpl implements ApplicationService {
         }
 
         ApplicationPo update = new ApplicationPo();
-        update.setIsDeleted(0);
+        update.setIsDeleted(1);
         update.setAppilcationId(appId);
 
         baseDao.update(update);
