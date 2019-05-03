@@ -34,6 +34,7 @@ public class LoginController {
         ActionResult.Builder<UserPo> builder = new ActionResult.Builder<>();
         Object userId = session.getAttribute("userId");
         UserPo userPo = userService.getUser(userId);
+        userPo.setPassword("");
         return builder.data(userPo).build();
     }
 
