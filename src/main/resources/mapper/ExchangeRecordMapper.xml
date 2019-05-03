@@ -4,12 +4,14 @@
 	<resultMap id="BaseResultMap" type="com.sheffield.common.entity.po.ExchangeRecordPo">
 		<id column="record_id" property="recordId" />
 		<result column="user_id" property="userId" />
+		<result column="user_name" property="userName" />
 		<result column="application_id" property="applicationId" />
 		<result column="application_name" property="applicationName" />
 		<result column="exhange_type" property="exhangeType" />
 		<result column="is_income" property="isIncome" />
 		<result column="peanuts" property="peanuts" />
 		<result column="create_time" property="createTime" />
+		<result column="is_deleted" property="isDeleted" />
 	</resultMap>
 
 	<sql id="Table_Name">
@@ -19,12 +21,14 @@
 	<sql id="Base_Column">
 		record_id,
 		user_id,
+		user_name,
 		application_id,
 		application_name,
 		exhange_type,
 		is_income,
 		peanuts,
-		create_time
+		create_time,
+		is_deleted
 	</sql>
 
 	<sql id="Base_Where">
@@ -34,6 +38,9 @@
 		  </if>
 		  <if test="userId != null">
             AND user_id = #{userId}
+		  </if>
+		  <if test="userName != null">
+            AND user_name = #{userName}
 		  </if>
 		  <if test="applicationId != null">
             AND application_id = #{applicationId}
@@ -52,6 +59,9 @@
 		  </if>
 		  <if test="createTime != null">
             AND create_time = #{createTime}
+		  </if>
+		  <if test="isDeleted != null">
+            AND is_deleted = #{isDeleted}
 		  </if>
 	    </trim>
 	</sql>
@@ -75,6 +85,9 @@
           <if test="userId != null">
             user_id,
           </if>
+          <if test="userName != null">
+            user_name,
+          </if>
           <if test="applicationId != null">
             application_id,
           </if>
@@ -93,6 +106,9 @@
           <if test="createTime != null">
             create_time,
           </if>
+          <if test="isDeleted != null">
+            is_deleted,
+          </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 	      <if test="recordId != null">
@@ -100,6 +116,9 @@
 	      </if>
 	      <if test="userId != null">
 		    #{userId},
+	      </if>
+	      <if test="userName != null">
+		    #{userName},
 	      </if>
 	      <if test="applicationId != null">
 		    #{applicationId},
@@ -119,6 +138,9 @@
 	      <if test="createTime != null">
 		    #{createTime},
 	      </if>
+	      <if test="isDeleted != null">
+		    #{isDeleted},
+	      </if>
         </trim>
 	</insert>
 	
@@ -126,23 +148,27 @@
 	    insert into <include refid="Table_Name" />
           (
             user_id,
+            user_name,
             application_id,
             application_name,
             exhange_type,
             is_income,
             peanuts,
-            create_time
+            create_time,
+            is_deleted
           ) 
 	      values
 	    <foreach collection="list" item="item" separator=",">
           (
             #{item.userId},
+            #{item.userName},
             #{item.applicationId},
             #{item.applicationName},
             #{item.exhangeType},
             #{item.isIncome},
             #{item.peanuts},
-            #{item.createTime}
+            #{item.createTime},
+            #{item.isDeleted}
           )
         </foreach>
 	</insert>
@@ -152,6 +178,9 @@
 	    <set>
         <if test="userId != null">
           user_id = #{userId},
+        </if>
+        <if test="userName != null">
+          user_name = #{userName},
         </if>
         <if test="applicationId != null">
           application_id = #{applicationId},
@@ -167,6 +196,9 @@
         </if>
         <if test="peanuts != null">
           peanuts = #{peanuts},
+        </if>
+        <if test="isDeleted != null">
+          is_deleted = #{isDeleted},
         </if>
 	    </set>
 	    where record_id = #{recordId}

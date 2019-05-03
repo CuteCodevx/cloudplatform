@@ -24,6 +24,11 @@ public class ExchangeRecordPo implements Serializable {
 	private Integer userId;
 
 	/**
+	 * userName: user_name
+	 */
+	private String userName;
+
+	/**
 	 * applicationId: application_id
 	 */
 	private Integer applicationId;
@@ -53,6 +58,11 @@ public class ExchangeRecordPo implements Serializable {
 	 */
 	private java.util.Date createTime;
 
+	/**
+	 * isDeleted: is_deleted
+	 */
+	private Integer isDeleted;
+
 	// column end
 
 
@@ -70,6 +80,14 @@ public class ExchangeRecordPo implements Serializable {
 
 	public void setUserId(Integer value) {
 		this.userId = value;
+	}
+
+	public String getUserName() {
+		return this.userName;
+	}
+
+	public void setUserName(String value) {
+		this.userName = value;
 	}
 
 	public Integer getApplicationId() {
@@ -118,6 +136,14 @@ public class ExchangeRecordPo implements Serializable {
 
 	public void setCreateTime(java.util.Date value) {
 		this.createTime = value;
+	}
+
+	public Integer getIsDeleted() {
+		return this.isDeleted;
+	}
+
+	public void setIsDeleted(Integer value) {
+		this.isDeleted = value;
 	}
 	
 }

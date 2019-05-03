@@ -22,4 +22,8 @@ public interface ApplicationService {
 
     PageInfo<ApplicationPo> getApplicationList(Integer pageSize, Integer pageNum);
 
+    void deleteApplication(Integer userId, Integer appId);
+
+    void passApplication(Integer userId, Integer appId);
+
 }

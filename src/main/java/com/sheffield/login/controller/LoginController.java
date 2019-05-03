@@ -34,7 +34,7 @@ public class LoginController {
         ActionResult.Builder<UserPo> builder = new ActionResult.Builder<>();
         Object userId = session.getAttribute("userId");
         UserPo userPo = userService.getUser(userId);
-        userPo.setPassword("");
+        userPo.setPassword("******");
         return builder.data(userPo).build();
     }
 
@@ -49,6 +49,7 @@ public class LoginController {
         }
         session.setAttribute("userId", login.getData().getUserId());
         session.setAttribute("userName", login.getData().getUserName());
+        session.setAttribute("role", login.getData().getRole());
         return builder.build();
     }
 
@@ -58,6 +59,7 @@ public class LoginController {
 
         session.removeAttribute("userId");
         session.removeAttribute("userName");
+        session.removeAttribute("role");
 
         userService.loginOut(userId);
 
@@ -79,6 +81,7 @@ public class LoginController {
             return builder.code(register.getCode()).message(register.getMessage()).build();
         }
         session.setAttribute("userId", register.getData().getUserId());
+        session.setAttribute("role", register.getData().getRole());
         session.setAttribute("userName", register.getData().getUserName());
         return builder.build();
     }

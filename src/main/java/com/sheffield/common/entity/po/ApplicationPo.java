@@ -24,6 +24,11 @@ public class ApplicationPo implements Serializable {
 	private Integer userId;
 
 	/**
+	 * userName: user_name
+	 */
+	private Integer userName;
+
+	/**
 	 * applicationName: application_name
 	 */
 	private String applicationName;
@@ -48,6 +53,21 @@ public class ApplicationPo implements Serializable {
 	 */
 	private String linkUrl;
 
+	/**
+	 * checkStatus: check_status
+	 */
+	private Integer checkStatus;
+
+	/**
+	 * createTime: create_time
+	 */
+	private java.util.Date createTime;
+
+	/**
+	 * isDeleted: is_deleted
+	 */
+	private Integer isDeleted;
+
 	// column end
 
 
@@ -65,6 +85,14 @@ public class ApplicationPo implements Serializable {
 
 	public void setUserId(Integer value) {
 		this.userId = value;
+	}
+
+	public Integer getUserName() {
+		return this.userName;
+	}
+
+	public void setUserName(Integer value) {
+		this.userName = value;
 	}
 
 	public String getApplicationName() {
@@ -105,6 +133,30 @@ public class ApplicationPo implements Serializable {
 
 	public void setLinkUrl(String value) {
 		this.linkUrl = value;
+	}
+
+	public Integer getCheckStatus() {
+		return this.checkStatus;
+	}
+
+	public void setCheckStatus(Integer value) {
+		this.checkStatus = value;
+	}
+
+	public java.util.Date getCreateTime() {
+		return this.createTime;
+	}
+
+	public void setCreateTime(java.util.Date value) {
+		this.createTime = value;
+	}
+
+	public Integer getIsDeleted() {
+		return this.isDeleted;
+	}
+
+	public void setIsDeleted(Integer value) {
+		this.isDeleted = value;
 	}
 	
 }

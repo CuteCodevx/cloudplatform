@@ -29,6 +29,11 @@ public class UserPo implements Serializable {
 	private String password;
 
 	/**
+	 * role: role
+	 */
+	private Integer role;
+
+	/**
 	 * loginStatus: login_status
 	 */
 	private Integer loginStatus;
@@ -37,6 +42,16 @@ public class UserPo implements Serializable {
 	 * userCount: user_count
 	 */
 	private Long userCount;
+
+	/**
+	 * createTime: create_time
+	 */
+	private java.util.Date createTime;
+
+	/**
+	 * isDeleted: is_deleted
+	 */
+	private Integer isDeleted;
 
 	// column end
 
@@ -65,6 +80,14 @@ public class UserPo implements Serializable {
 		this.password = value;
 	}
 
+	public Integer getRole() {
+		return this.role;
+	}
+
+	public void setRole(Integer value) {
+		this.role = value;
+	}
+
 	public Integer getLoginStatus() {
 		return this.loginStatus;
 	}
@@ -79,6 +102,22 @@ public class UserPo implements Serializable {
 
 	public void setUserCount(Long value) {
 		this.userCount = value;
+	}
+
+	public java.util.Date getCreateTime() {
+		return this.createTime;
+	}
+
+	public void setCreateTime(java.util.Date value) {
+		this.createTime = value;
+	}
+
+	public Integer getIsDeleted() {
+		return this.isDeleted;
+	}
+
+	public void setIsDeleted(Integer value) {
+		this.isDeleted = value;
 	}
 	
 }

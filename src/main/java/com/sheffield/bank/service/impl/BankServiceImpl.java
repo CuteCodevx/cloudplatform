@@ -16,6 +16,8 @@ import com.sheffield.common.entity.po.ExchangeRecordPo;
 import com.sheffield.common.entity.po.UserPo;
 import com.sheffield.common.enums.ExchangeTypeEnum;
 import com.sheffield.common.enums.IncomeTypeEnum;
+import com.sheffield.common.enums.RoleTypeEnum;
+import com.sheffield.login.service.UserService;
 
 /**
  * 
@@ -30,12 +32,20 @@ public class BankServiceImpl implements BankService {
     @Resource
     private BaseDao baseDao;
 
+    @Resource
+    private UserService userService;
+
     @Override
     public PageInfo<ExchangeRecordPo> exchangeRecords(Integer pageSize, Integer pageNum, Integer userId) {
+
+        UserPo userPo = userService.getUser(userId);
         pageNum = pageNum == null ? 1 : pageNum;
         pageSize = pageSize == null ? 10 : pageSize;
         ExchangeRecordPo param = new ExchangeRecordPo();
-        param.setUserId(userId);
+        if (!RoleTypeEnum.isAdmin(userPo)) {
+            param.setUserId(userId);
+        }
+        param.setIsDeleted(0);
 
         return baseDao.selectPageListAndCount(ExchangeRecordPo.class,
                 "selectList", param, pageNum, pageSize, "create_time desc");
@@ -67,6 +77,10 @@ public class BankServiceImpl implements BankService {
         ApplicationPo applicationPo = baseDao.selectById(ApplicationPo.class, appId);
 
         if (userId.equals(applicationPo.getUserId())) {
+            return;
+        }
+
+        if (RoleTypeEnum.isAdmin(userService.getUser(userId))) {
             return;
         }
 

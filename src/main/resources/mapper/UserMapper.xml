@@ -5,8 +5,11 @@
 		<id column="user_id" property="userId" />
 		<result column="user_name" property="userName" />
 		<result column="password" property="password" />
+		<result column="role" property="role" />
 		<result column="login_status" property="loginStatus" />
 		<result column="user_count" property="userCount" />
+		<result column="create_time" property="createTime" />
+		<result column="is_deleted" property="isDeleted" />
 	</resultMap>
 
 	<sql id="Table_Name">
@@ -17,8 +20,11 @@
 		user_id,
 		user_name,
 		password,
+		role,
 		login_status,
-		user_count
+		user_count,
+		create_time,
+		is_deleted
 	</sql>
 
 	<sql id="Base_Where">
@@ -32,11 +38,20 @@
 		  <if test="password != null">
             AND password = #{password}
 		  </if>
+		  <if test="role != null">
+            AND role = #{role}
+		  </if>
 		  <if test="loginStatus != null">
             AND login_status = #{loginStatus}
 		  </if>
 		  <if test="userCount != null">
             AND user_count = #{userCount}
+		  </if>
+		  <if test="createTime != null">
+            AND create_time = #{createTime}
+		  </if>
+		  <if test="isDeleted != null">
+            AND is_deleted = #{isDeleted}
 		  </if>
 	    </trim>
 	</sql>
@@ -63,11 +78,20 @@
           <if test="password != null">
             password,
           </if>
+          <if test="role != null">
+            role,
+          </if>
           <if test="loginStatus != null">
             login_status,
           </if>
           <if test="userCount != null">
             user_count,
+          </if>
+          <if test="createTime != null">
+            create_time,
+          </if>
+          <if test="isDeleted != null">
+            is_deleted,
           </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -80,11 +104,20 @@
 	      <if test="password != null">
 		    #{password},
 	      </if>
+	      <if test="role != null">
+		    #{role},
+	      </if>
 	      <if test="loginStatus != null">
 		    #{loginStatus},
 	      </if>
 	      <if test="userCount != null">
 		    #{userCount},
+	      </if>
+	      <if test="createTime != null">
+		    #{createTime},
+	      </if>
+	      <if test="isDeleted != null">
+		    #{isDeleted},
 	      </if>
         </trim>
 	</insert>
@@ -94,16 +127,22 @@
           (
             user_name,
             password,
+            role,
             login_status,
-            user_count
+            user_count,
+            create_time,
+            is_deleted
           ) 
 	      values
 	    <foreach collection="list" item="item" separator=",">
           (
             #{item.userName},
             #{item.password},
+            #{item.role},
             #{item.loginStatus},
-            #{item.userCount}
+            #{item.userCount},
+            #{item.createTime},
+            #{item.isDeleted}
           )
         </foreach>
 	</insert>
@@ -117,11 +156,17 @@
         <if test="password != null">
           password = #{password},
         </if>
+        <if test="role != null">
+          role = #{role},
+        </if>
         <if test="loginStatus != null">
           login_status = #{loginStatus},
         </if>
         <if test="userCount != null">
           user_count = #{userCount},
+        </if>
+        <if test="isDeleted != null">
+          is_deleted = #{isDeleted},
         </if>
 	    </set>
 	    where user_id = #{userId}

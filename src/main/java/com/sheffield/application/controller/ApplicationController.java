@@ -53,7 +53,25 @@ public class ApplicationController {
     public ActionResult<String> useApp(HttpSession session, Integer appId) {
         ActionResult.Builder<String> builder = new ActionResult.Builder<>();
         Integer userId = (Integer) session.getAttribute("userId");
-         bankService.useApp(userId, appId);
+        bankService.useApp(userId, appId);
+        return builder.data("").build();
+    }
+
+    @GetMapping("deleteApplication")
+    @ResponseBody
+    public ActionResult<String> deleteApplication(HttpSession session, Integer appId) {
+        ActionResult.Builder<String> builder = new ActionResult.Builder<>();
+        Integer userId = (Integer) session.getAttribute("userId");
+        applicationService.deleteApplication(userId, appId);
+        return builder.data("").build();
+    }
+
+    @GetMapping("passApplication")
+    @ResponseBody
+    public ActionResult<String> passApplication(HttpSession session, Integer appId) {
+        ActionResult.Builder<String> builder = new ActionResult.Builder<>();
+        Integer userId = (Integer) session.getAttribute("userId");
+        applicationService.passApplication(userId, appId);
         return builder.data("").build();
     }
 }
