@@ -3,49 +3,125 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.1/jquery.form.min.js"></script>
     <title>My Bank</title>
 </head>
 <body>
 <!-- Header -->
-<header class="w3-display-container w3-content w3-center" style="max-width:1500px">
+<header class="w3-display-container w3-light-grey  w3-content w3-center" style="max-width:1500px">
     <!--<img class="w3-image"  src="/static/IMG_1145.PNG" th:src = "@{/IMG_1145.PNG}" alt="Me" style="height: 400px">-->
-    <p class="w3-light-grey" style="height: 400px"></p>
+    <p style="height: 400px; margin:0"></p>
     <div class="w3-display-middle w3-padding-large w3-border w3-wide w3-text-light-grey w3-center">
         <h1 class="w3-hide-medium w3-text-black w3-hide-small w3-xxxlarge">PLATFORM AS A SEVICE</h1>
         <h5 class="w3-hide-large w3-text-black" style="white-space:nowrap">PLATFORM AS A SEVICE</h5>
         <h3 class="w3-hide-medium w3-hide-small w3-text-black">SHEFFIELD</h3>
     </div>
 
-    <div class="w3-bar w3-light-grey w3-round w3-display-bottommiddle" style="bottom:-16px">
+    <div class="w3-bar w3-light-grey w3-round w3-display-bottommiddle w3-hide-small w3-hide-medium" style="bottom:-16px">
         <a href="index" class="w3-bar-item w3-button">Home</a>
-        <a class="w3-bar-item w3-button" th:if="${session.userId}" th:text="${session.userId}"></a>
-        <a href="logout" class="w3-bar-item w3-button" th:if="${session.userId}">Log out</a>
-        <a href="bank" class="w3-bar-item w3-button w3-black" th:if="${session.userId}">My Bank</a>
-        <a href="#uploadFile" class="w3-bar-item w3-button" th:if="${session.userId}">Upload</a>
+        <a class="w3-bar-item" th:if="${session.userId}" th:text="${session.userName}"></a>
+        <a href="loginOut" class="w3-bar-item w3-button" th:if="${session.userId}">Log out</a>
+        <!--<a href="login" class="w3-bar-item w3-button"  th:unless="${session.userId != null}" >Login</a>-->
+        <!--<a href="register" class="w3-bar-item w3-button"  th:unless="${session.userId != null}" >Register</a>-->
+        <a href="/toBank" class="w3-bar-item w3-button w3-black" th:if="${session.userId}">My Bank</a>
     </div>
 </header>
 
+<!-- Navbar on small screens -->
+<div class="w3-center w3-light-grey w3-padding-16 w3-hide-large">
+    <div class="w3-bar w3-light-grey">
+        <a href="index" class="w3-bar-item w3-button w3-black">Home</a>
+        <a class="w3-bar-item" th:if="${session.userId}" th:text="${session.userName}"></a>
+        <a href="loginOut" class="w3-bar-item w3-button" th:if="${session.userId}">Log out</a>
+        <a href="/toBank" class="w3-bar-item w3-button">My Bank</a>
+    </div>
+</div>
 <section class="w3-container w3-content" style="max-width:1400px;margin-top:80px">
     <!-- Profile -->
     <div class="w3-card w3-round w3-white">
         <div class="w3-container">
             <h4 class="w3-center">User Profile</h4>
             <hr>
-            <p>Username: <span></span></p>
-            <p>Peanuts: <span></span></p>
+            <p>Username: <span id="username"></span></p>
+            <p>Peanuts: <span id="banlance"></span></p>
         </div>
     </div>
-    <div>
-        <h2>Transaction Record</h2>
-        <p>Time: time</p>
-        <p>SourceApplication : project Name</p>
-        <p>From Username</p>
-        <p>Peanuts : -4</p>
+    <!-- transaction  -->
+    <div class="w3-card w3-round w3-white" style="margin-top: 80px">
+        <div class="w3-container">
+            <h4 class="w3-center">Transaction Record</h4>
+            <hr>
+            <ul class="w3-ul w3-center" id="thead" style="width:100%">
+            </ul>
+
+        </div>
     </div>
 </section>
-
-
-
 <footer th:include="@{/footer} :: footerInfo"></footer>
+<script>
+    $(function () {
+
+        $.ajax({
+            async:false,
+            url:'userInfo',
+            type:'get',
+            dataType:"text",
+            success:function (data) {
+                var result = JSON.parse(data);
+                $('#username').text(result.data.userName);
+                $('#banlance').text(result.data.userCount);
+            }
+        })
+
+        setTimeout(function () {
+            $.ajax({
+                async:false,
+                url:'exchangeRecords?pageSize=10&pageNum=1',
+                type:'get',
+                dataType:"text",
+                success:function (data) {
+                    //alert(data);
+                    var result = JSON.parse(data);
+                    var pageInfo = result.data;
+                    var info = result.data.list;
+                    if (info.length != 0) {
+                        for(var i=0;i<info.length;i++){
+                            console.log(info[i]);
+                            //upload app, pay to platform, no earn money
+                            if(info[i].exhangeType == 1 && info[i].isIncome == 0){
+                                $('#thead').append(`<li><span class="w3-text-red">
+                                `+info[i].userName+`</span> uploads one project \" <span class="w3-text-red">`+info[i].applicationName+` </span>\", pay <span class="w3-text-red">`+info[i].peanuts+` peanuts </span>to the platform.
+</li>`);
+//                             } else if(info[i].exhangeType == 1 && info[i].isIncome == 1) {
+//                                 $('#thead').append(`<li><span class="w3-text-red">
+//                                 `+info[i].userName+`</span> opened one project \" <span class="w3-text-red">`+info[i].applicationName+` </span>\", pay <span class="w3-text-red">`+info[i].peanuts+` peanuts </span>to the application developer.
+// </li>`);
+                            }else if(info[i].exhangeType == 0 && info[i].isIncome == 0){
+                                //no upload no earn money
+                                $('#thead').append(`<li><span class="w3-text-red">
+                                `+info[i].userName+`</span> opened one project \" <span class="w3-text-red">`+info[i].applicationName+` </span>\", pay <span class="w3-text-red">`+info[i].peanuts+` peanuts </span>to the application developer.
+</li>`);
+                            }else if(info[i].exhangeType == 0 && info[i].isIncome == 1){
+                                //no upload, earn money
+                                $('#thead').append(`<li><span class="w3-text-red">
+                                `+info[i].userName+`</span> earn <span class="w3-text-red">`+info[i].peanuts+` peanuts </span>.
+</li>`);
+                            }
+
+//                             if(info[i].isIncome != 0){
+//                                 $('#thead').append(`<li><span class="w3-text-red">
+//                                 `+info[i].userName+` </span>opened one project \" <span class="w3-text-red">`+info[i].applicationName+` </span>\", pay <span class="w3-text-red">`+info[i].peanuts+` peanuts </span> to the <span class="w3-text-red"> `+info[i].userId+` </span>.
+// </li>`);
+                            //}
+                        }
+
+                    }
+                }
+            })
+        },500);
+
+    })
+</script>
 </body>
 </html>

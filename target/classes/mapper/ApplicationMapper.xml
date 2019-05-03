@@ -2,13 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sheffield.common.entity.po.ApplicationPo">
 	<resultMap id="BaseResultMap" type="com.sheffield.common.entity.po.ApplicationPo">
-		<id column="appilcation_id" property="appilcationId" />
+		<id column="application_id" property="applicationId" />
 		<result column="user_id" property="userId" />
+		<result column="user_name" property="userName" />
 		<result column="application_name" property="applicationName" />
 		<result column="description" property="description" />
 		<result column="file_url" property="fileUrl" />
 		<result column="image_url" property="imageUrl" />
 		<result column="link_url" property="linkUrl" />
+		<result column="check_status" property="checkStatus" />
+		<result column="create_time" property="createTime" />
+		<result column="is_deleted" property="isDeleted" />
 	</resultMap>
 
 	<sql id="Table_Name">
@@ -16,22 +20,29 @@
 	</sql>
 
 	<sql id="Base_Column">
-		appilcation_id,
+		application_id,
 		user_id,
+		user_name,
 		application_name,
 		description,
 		file_url,
 		image_url,
-		link_url
+		link_url,
+		check_status,
+		create_time,
+		is_deleted
 	</sql>
 
 	<sql id="Base_Where">
 	    <trim prefixOverrides="AND">
-		  <if test="appilcationId != null">
-            AND appilcation_id = #{appilcationId}
+		  <if test="applicationId != null">
+            AND application_id = #{applicationId}
 		  </if>
 		  <if test="userId != null">
             AND user_id = #{userId}
+		  </if>
+		  <if test="userName != null">
+            AND user_name = #{userName}
 		  </if>
 		  <if test="applicationName != null">
             AND application_name = #{applicationName}
@@ -48,6 +59,15 @@
 		  <if test="linkUrl != null">
             AND link_url = #{linkUrl}
 		  </if>
+		  <if test="checkStatus != null">
+            AND check_status = #{checkStatus}
+		  </if>
+		  <if test="createTime != null">
+            AND create_time = #{createTime}
+		  </if>
+		  <if test="isDeleted != null">
+            AND is_deleted = #{isDeleted}
+		  </if>
 	    </trim>
 	</sql>
 	
@@ -61,14 +81,17 @@
 		</where>
 	</sql>
 
-	<insert id="insert" parameterType="com.sheffield.common.entity.po.ApplicationPo" useGeneratedKeys="true" keyProperty="appilcationId">
+	<insert id="insert" parameterType="com.sheffield.common.entity.po.ApplicationPo" useGeneratedKeys="true" keyProperty="applicationId">
 	    insert into <include refid="Table_Name" />
         <trim prefix="(" suffix=")" suffixOverrides=",">
-          <if test="appilcationId != null">
-            appilcation_id,
+          <if test="applicationId != null">
+            application_id,
           </if>
           <if test="userId != null">
             user_id,
+          </if>
+          <if test="userName != null">
+            user_name,
           </if>
           <if test="applicationName != null">
             application_name,
@@ -85,13 +108,25 @@
           <if test="linkUrl != null">
             link_url,
           </if>
+          <if test="checkStatus != null">
+            check_status,
+          </if>
+          <if test="createTime != null">
+            create_time,
+          </if>
+          <if test="isDeleted != null">
+            is_deleted,
+          </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-	      <if test="appilcationId != null">
-		    #{appilcationId},
+	      <if test="applicationId != null">
+		    #{applicationId},
 	      </if>
 	      <if test="userId != null">
 		    #{userId},
+	      </if>
+	      <if test="userName != null">
+		    #{userName},
 	      </if>
 	      <if test="applicationName != null">
 		    #{applicationName},
@@ -108,6 +143,15 @@
 	      <if test="linkUrl != null">
 		    #{linkUrl},
 	      </if>
+	      <if test="checkStatus != null">
+		    #{checkStatus},
+	      </if>
+	      <if test="createTime != null">
+		    #{createTime},
+	      </if>
+	      <if test="isDeleted != null">
+		    #{isDeleted},
+	      </if>
         </trim>
 	</insert>
 	
@@ -115,21 +159,29 @@
 	    insert into <include refid="Table_Name" />
           (
             user_id,
+            user_name,
             application_name,
             description,
             file_url,
             image_url,
-            link_url
+            link_url,
+            check_status,
+            create_time,
+            is_deleted
           ) 
 	      values
 	    <foreach collection="list" item="item" separator=",">
           (
             #{item.userId},
+            #{item.userName},
             #{item.applicationName},
             #{item.description},
             #{item.fileUrl},
             #{item.imageUrl},
-            #{item.linkUrl}
+            #{item.linkUrl},
+            #{item.checkStatus},
+            #{item.createTime},
+            #{item.isDeleted}
           )
         </foreach>
 	</insert>
@@ -139,6 +191,9 @@
 	    <set>
         <if test="userId != null">
           user_id = #{userId},
+        </if>
+        <if test="userName != null">
+          user_name = #{userName},
         </if>
         <if test="applicationName != null">
           application_name = #{applicationName},
@@ -155,8 +210,14 @@
         <if test="linkUrl != null">
           link_url = #{linkUrl},
         </if>
+        <if test="checkStatus != null">
+          check_status = #{checkStatus},
+        </if>
+        <if test="isDeleted != null">
+          is_deleted = #{isDeleted},
+        </if>
 	    </set>
-	    where appilcation_id = #{appilcationId}
+	    where application_id = #{applicationId}
 	</update>
 	
 	<select id="count" parameterType="com.sheffield.common.entity.po.ApplicationPo" resultType="java.lang.Integer">
@@ -174,7 +235,7 @@
 	    select 
 	    <include refid="Base_Column" />
 	    from <include refid="Table_Name" />
-	    where appilcation_id = #{appilcationId}
+	    where application_id = #{applicationId}
 	</select>
 
 	<select id="selectList" parameterType="com.sheffield.common.entity.po.ApplicationPo" resultMap="BaseResultMap">
@@ -183,7 +244,7 @@
 	
 	<delete id="deleteById" parameterType="Integer">
 	    delete from <include refid="Table_Name" />
-        where appilcation_id = #{appilcationId}
+        where application_id = #{applicationId}
 	</delete>
 	
 </mapper>

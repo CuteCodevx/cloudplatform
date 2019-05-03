@@ -47,7 +47,7 @@ public class ApplicationServiceImpl implements ApplicationService {
         applicationPo.setDescription(desc);
         baseDao.insert(applicationPo);
 
-        bankService.uploadApp(userId, applicationPo.getAppilcationId(), applicationName);
+        bankService.uploadApp(userId, applicationPo.getApplicationId(), applicationName);
     }
 
     @Override
@@ -66,7 +66,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 
         ApplicationPo update = new ApplicationPo();
         update.setIsDeleted(1);
-        update.setAppilcationId(appId);
+        update.setApplicationId(appId);
 
         baseDao.update(update);
     }
@@ -79,7 +79,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 
         ApplicationPo update = new ApplicationPo();
         update.setCheckStatus(CheckStatusEnum.PASS.getStatus());
-        update.setAppilcationId(appId);
+        update.setApplicationId(appId);
 
         baseDao.update(update);
     }
