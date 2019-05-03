@@ -29,6 +29,7 @@ public class LoginController {
     private UserService userService;
 
     @GetMapping("userInfo")
+    @ResponseBody
     public ActionResult<UserPo> userInfo (HttpSession session) {
         ActionResult.Builder<UserPo> builder = new ActionResult.Builder<>();
         Object userId = session.getAttribute("userId");
