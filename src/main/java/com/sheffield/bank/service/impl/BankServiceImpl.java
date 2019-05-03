@@ -32,6 +32,8 @@ public class BankServiceImpl implements BankService {
 
     @Override
     public PageInfo<ExchangeRecordPo> exchangeRecords(Integer pageSize, Integer pageNum, Integer userId) {
+        pageNum = pageNum == null ? 1 : pageNum;
+        pageSize = pageSize == null ? 10 : pageSize;
         ExchangeRecordPo param = new ExchangeRecordPo();
         param.setUserId(userId);
 
@@ -52,6 +54,12 @@ public class BankServiceImpl implements BankService {
         po.setCreateTime(new Date());
 
         baseDao.insert(po);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("userId", userId);
+        map.put("count", 5L);
+        // 扣除使用者的金额
+        baseDao.update(UserPo.class, "deductCount", map);
     }
 
     @Override
