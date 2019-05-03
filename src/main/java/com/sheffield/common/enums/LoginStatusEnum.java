@@ -1,4 +1,4 @@
-package com.sheffield.common;
+package com.sheffield.common.enums;
 
 /** 
  * 

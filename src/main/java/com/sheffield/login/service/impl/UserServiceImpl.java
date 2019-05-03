@@ -4,7 +4,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.sheffield.common.LoginStatusEnum;
+import com.sheffield.common.enums.LoginStatusEnum;
 import com.sheffield.common.dao.BaseDao;
 import com.sheffield.common.entity.po.UserPo;
 import com.sheffield.common.result.ActionResult;

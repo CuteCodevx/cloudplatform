@@ -1,7 +1,6 @@
 package com.sheffield.login.controller;
 
 import java.io.File;
-import java.util.Objects;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -17,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sheffield.application.service.ApplicationService;
-import com.sheffield.common.ServerConfig;
+import com.sheffield.ServerConfig;
 import com.sheffield.common.result.ActionResult;
 import com.sheffield.common.result.ResultType;
 

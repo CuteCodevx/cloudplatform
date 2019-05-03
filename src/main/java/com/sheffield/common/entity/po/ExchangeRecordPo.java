@@ -39,6 +39,11 @@ public class ExchangeRecordPo implements Serializable {
 	private Integer exhangeType;
 
 	/**
+	 * isIncome: is_income
+	 */
+	private Integer isIncome;
+
+	/**
 	 * peanuts: peanuts
 	 */
 	private Long peanuts;
@@ -89,6 +94,14 @@ public class ExchangeRecordPo implements Serializable {
 
 	public void setExhangeType(Integer value) {
 		this.exhangeType = value;
+	}
+
+	public Integer getIsIncome() {
+		return this.isIncome;
+	}
+
+	public void setIsIncome(Integer value) {
+		this.isIncome = value;
 	}
 
 	public Long getPeanuts() {

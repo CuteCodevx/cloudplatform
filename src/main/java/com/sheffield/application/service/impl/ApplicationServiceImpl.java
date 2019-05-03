@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageInfo;
 import com.sheffield.application.service.ApplicationService;
+import com.sheffield.bank.service.BankService;
 import com.sheffield.common.dao.BaseDao;
 import com.sheffield.common.entity.po.ApplicationPo;
 
@@ -22,6 +23,9 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Resource
     private BaseDao baseDao;
 
+    @Resource
+    private BankService bankService;
+
     @Override
     public void saveApplication(String imageUrl, String fileUrl, String linkUrl, String applicationName, String desc, Integer userId) {
         ApplicationPo applicationPo = new ApplicationPo();
@@ -32,6 +36,8 @@ public class ApplicationServiceImpl implements ApplicationService {
         applicationPo.setLinkUrl(linkUrl);
         applicationPo.setDescription(desc);
         baseDao.insert(applicationPo);
+
+        bankService.uploadApp(userId, applicationPo.getAppilcationId(), applicationName);
     }
 
     @Override

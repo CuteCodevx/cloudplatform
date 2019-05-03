@@ -1,4 +1,4 @@
-package com.sheffield.common;
+package com.sheffield;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;

@@ -7,6 +7,7 @@
 		<result column="application_id" property="applicationId" />
 		<result column="application_name" property="applicationName" />
 		<result column="exhange_type" property="exhangeType" />
+		<result column="is_income" property="isIncome" />
 		<result column="peanuts" property="peanuts" />
 		<result column="create_time" property="createTime" />
 	</resultMap>
@@ -21,6 +22,7 @@
 		application_id,
 		application_name,
 		exhange_type,
+		is_income,
 		peanuts,
 		create_time
 	</sql>
@@ -41,6 +43,9 @@
 		  </if>
 		  <if test="exhangeType != null">
             AND exhange_type = #{exhangeType}
+		  </if>
+		  <if test="isIncome != null">
+            AND is_income = #{isIncome}
 		  </if>
 		  <if test="peanuts != null">
             AND peanuts = #{peanuts}
@@ -79,6 +84,9 @@
           <if test="exhangeType != null">
             exhange_type,
           </if>
+          <if test="isIncome != null">
+            is_income,
+          </if>
           <if test="peanuts != null">
             peanuts,
           </if>
@@ -102,6 +110,9 @@
 	      <if test="exhangeType != null">
 		    #{exhangeType},
 	      </if>
+	      <if test="isIncome != null">
+		    #{isIncome},
+	      </if>
 	      <if test="peanuts != null">
 		    #{peanuts},
 	      </if>
@@ -118,6 +129,7 @@
             application_id,
             application_name,
             exhange_type,
+            is_income,
             peanuts,
             create_time
           ) 
@@ -128,6 +140,7 @@
             #{item.applicationId},
             #{item.applicationName},
             #{item.exhangeType},
+            #{item.isIncome},
             #{item.peanuts},
             #{item.createTime}
           )
@@ -148,6 +161,9 @@
         </if>
         <if test="exhangeType != null">
           exhange_type = #{exhangeType},
+        </if>
+        <if test="isIncome != null">
+          is_income = #{isIncome},
         </if>
         <if test="peanuts != null">
           peanuts = #{peanuts},

@@ -47,4 +47,13 @@ public class ApplicationController {
         PageInfo<ExchangeRecordPo> pageInfo = bankService.exchangeRecords(pageSize, pageNum, userId);
         return builder.data(pageInfo).build();
     }
+
+    @GetMapping("useApp")
+    @ResponseBody
+    public ActionResult<String> useApp(HttpSession session, Integer appId) {
+        ActionResult.Builder<String> builder = new ActionResult.Builder<>();
+        Integer userId = (Integer) session.getAttribute("userId");
+         bankService.useApp(userId, appId);
+        return builder.data("").build();
+    }
 }
