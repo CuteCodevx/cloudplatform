@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.sheffield.common.dao.BaseDao;
 import com.sheffield.common.entity.po.UserPo;
 import com.sheffield.common.result.ActionResult;
 import com.sheffield.login.service.UserService;
@@ -28,6 +27,14 @@ public class LoginController {
 
     @Resource
     private UserService userService;
+
+    @GetMapping("userInfo")
+    public ActionResult<UserPo> userInfo (HttpSession session) {
+        ActionResult.Builder<UserPo> builder = new ActionResult.Builder<>();
+        Object userId = session.getAttribute("userId");
+        UserPo userPo = userService.getUser(userId);
+        return builder.data(userPo).build();
+    }
 
     @PostMapping("login")
     @ResponseBody
@@ -52,9 +59,7 @@ public class LoginController {
 
         userService.loginOut(userId);
 
-        ModelAndView mv = new ModelAndView("login");
-
-        return mv;
+        return new ModelAndView("login");
     }
 
     @GetMapping("register")

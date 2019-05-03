@@ -164,4 +164,13 @@ public abstract class AbstractDao extends SqlSessionDaoSupport {
         return new PageInfo<>(list);
     }
 
+    public <T> PageInfo<T> selectPageListAndCount(Class<?> statementClazz, String methodName, Object parameter,
+                                                  int pageNum, int pageSize, String orderBy) {
+
+        PageHelper.startPage(pageNum, pageSize);
+        PageHelper.orderBy(orderBy);
+        List<T> list = selectList(statementClazz, methodName, parameter);
+        return new PageInfo<>(list);
+    }
+
 }

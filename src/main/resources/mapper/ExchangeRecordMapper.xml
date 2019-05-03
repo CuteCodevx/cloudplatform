@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sheffield.common.entity.po.ExchangeRecordPo">
+	<resultMap id="BaseResultMap" type="com.sheffield.common.entity.po.ExchangeRecordPo">
+		<id column="record_id" property="recordId" />
+		<result column="user_id" property="userId" />
+		<result column="application_id" property="applicationId" />
+		<result column="application_name" property="applicationName" />
+		<result column="exhange_type" property="exhangeType" />
+		<result column="peanuts" property="peanuts" />
+		<result column="create_time" property="createTime" />
+	</resultMap>
+
+	<sql id="Table_Name">
+		exchange_record
+	</sql>
+
+	<sql id="Base_Column">
+		record_id,
+		user_id,
+		application_id,
+		application_name,
+		exhange_type,
+		peanuts,
+		create_time
+	</sql>
+
+	<sql id="Base_Where">
+	    <trim prefixOverrides="AND">
+		  <if test="recordId != null">
+            AND record_id = #{recordId}
+		  </if>
+		  <if test="userId != null">
+            AND user_id = #{userId}
+		  </if>
+		  <if test="applicationId != null">
+            AND application_id = #{applicationId}
+		  </if>
+		  <if test="applicationName != null">
+            AND application_name = #{applicationName}
+		  </if>
+		  <if test="exhangeType != null">
+            AND exhange_type = #{exhangeType}
+		  </if>
+		  <if test="peanuts != null">
+            AND peanuts = #{peanuts}
+		  </if>
+		  <if test="createTime != null">
+            AND create_time = #{createTime}
+		  </if>
+	    </trim>
+	</sql>
+	
+    <sql id="Base_Select">
+	    select
+		  <include refid="Base_Column" />
+		from
+		  <include refid="Table_Name" />
+		<where>
+		  <include refid="Base_Where" />
+		</where>
+	</sql>
+
+	<insert id="insert" parameterType="com.sheffield.common.entity.po.ExchangeRecordPo" useGeneratedKeys="true" keyProperty="recordId">
+	    insert into <include refid="Table_Name" />
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+          <if test="recordId != null">
+            record_id,
+          </if>
+          <if test="userId != null">
+            user_id,
+          </if>
+          <if test="applicationId != null">
+            application_id,
+          </if>
+          <if test="applicationName != null">
+            application_name,
+          </if>
+          <if test="exhangeType != null">
+            exhange_type,
+          </if>
+          <if test="peanuts != null">
+            peanuts,
+          </if>
+          <if test="createTime != null">
+            create_time,
+          </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+	      <if test="recordId != null">
+		    #{recordId},
+	      </if>
+	      <if test="userId != null">
+		    #{userId},
+	      </if>
+	      <if test="applicationId != null">
+		    #{applicationId},
+	      </if>
+	      <if test="applicationName != null">
+		    #{applicationName},
+	      </if>
+	      <if test="exhangeType != null">
+		    #{exhangeType},
+	      </if>
+	      <if test="peanuts != null">
+		    #{peanuts},
+	      </if>
+	      <if test="createTime != null">
+		    #{createTime},
+	      </if>
+        </trim>
+	</insert>
+	
+    <insert id="insertList" parameterType="java.util.List">
+	    insert into <include refid="Table_Name" />
+          (
+            user_id,
+            application_id,
+            application_name,
+            exhange_type,
+            peanuts,
+            create_time
+          ) 
+	      values
+	    <foreach collection="list" item="item" separator=",">
+          (
+            #{item.userId},
+            #{item.applicationId},
+            #{item.applicationName},
+            #{item.exhangeType},
+            #{item.peanuts},
+            #{item.createTime}
+          )
+        </foreach>
+	</insert>
+
+	<update id="update" parameterType="com.sheffield.common.entity.po.ExchangeRecordPo">
+	    update <include refid="Table_Name" />
+	    <set>
+        <if test="userId != null">
+          user_id = #{userId},
+        </if>
+        <if test="applicationId != null">
+          application_id = #{applicationId},
+        </if>
+        <if test="applicationName != null">
+          application_name = #{applicationName},
+        </if>
+        <if test="exhangeType != null">
+          exhange_type = #{exhangeType},
+        </if>
+        <if test="peanuts != null">
+          peanuts = #{peanuts},
+        </if>
+	    </set>
+	    where record_id = #{recordId}
+	</update>
+	
+	<select id="count" parameterType="com.sheffield.common.entity.po.ExchangeRecordPo" resultType="java.lang.Integer">
+	    select count(1) from <include refid="Table_Name" />
+	    <where>
+	      <include refid="Base_Where" />
+	    </where>
+	</select>
+
+	<select id="selectOne" parameterType="com.sheffield.common.entity.po.ExchangeRecordPo" resultMap="BaseResultMap">
+	    <include refid="Base_Select" />
+	</select>
+	
+	<select id="selectById" parameterType="Integer" resultMap="BaseResultMap">
+	    select 
+	    <include refid="Base_Column" />
+	    from <include refid="Table_Name" />
+	    where record_id = #{recordId}
+	</select>
+
+	<select id="selectList" parameterType="com.sheffield.common.entity.po.ExchangeRecordPo" resultMap="BaseResultMap">
+	    <include refid="Base_Select" />
+	</select>
+	
+	<delete id="deleteById" parameterType="Integer">
+	    delete from <include refid="Table_Name" />
+        where record_id = #{recordId}
+	</delete>
+	
+</mapper>
