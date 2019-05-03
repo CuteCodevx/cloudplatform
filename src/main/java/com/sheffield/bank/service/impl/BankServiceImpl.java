@@ -53,9 +53,12 @@ public class BankServiceImpl implements BankService {
 
     @Override
     public void uploadApp(Integer userId, Integer appId, String applicationName) {
+        UserPo userPo = userService.getUser(userId);
+
         ExchangeRecordPo po = new ExchangeRecordPo();
 
         po.setUserId(userId);
+        po.setUserName(userPo.getUserName());
         po.setApplicationId(appId);
         po.setApplicationName(applicationName);
         po.setExhangeType(ExchangeTypeEnum.UPLOAD_APP.getType());
@@ -86,8 +89,9 @@ public class BankServiceImpl implements BankService {
 
         // 保存交易信息
         ExchangeRecordPo po = new ExchangeRecordPo();
-
+        UserPo userPo = userService.getUser(userId);
         po.setUserId(userId);
+        po.setUserName(userPo.getUserName());
         po.setApplicationId(appId);
         po.setExhangeType(ExchangeTypeEnum.USE_APP.getType());
         po.setApplicationName(applicationPo.getApplicationName());
@@ -111,6 +115,7 @@ public class BankServiceImpl implements BankService {
         ExchangeRecordPo po2 = new ExchangeRecordPo();
 
         po2.setUserId(applicationPo.getUserId());
+        po2.setUserName(userService.getUser(applicationPo.getUserId()).getUserName());
         po2.setApplicationId(appId);
         po2.setExhangeType(ExchangeTypeEnum.USE_APP.getType());
         po2.setApplicationName(applicationPo.getApplicationName());

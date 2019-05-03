@@ -26,7 +26,7 @@ public class ApplicationPo implements Serializable {
 	/**
 	 * userName: user_name
 	 */
-	private Integer userName;
+	private String userName;
 
 	/**
 	 * applicationName: application_name
@@ -87,11 +87,11 @@ public class ApplicationPo implements Serializable {
 		this.userId = value;
 	}
 
-	public Integer getUserName() {
+	public String getUserName() {
 		return this.userName;
 	}
 
-	public void setUserName(Integer value) {
+	public void setUserName(String value) {
 		this.userName = value;
 	}
 

@@ -9,6 +9,7 @@ import com.sheffield.application.service.ApplicationService;
 import com.sheffield.bank.service.BankService;
 import com.sheffield.common.dao.BaseDao;
 import com.sheffield.common.entity.po.ApplicationPo;
+import com.sheffield.common.entity.po.UserPo;
 import com.sheffield.common.enums.CheckStatusEnum;
 import com.sheffield.common.enums.RoleTypeEnum;
 import com.sheffield.login.service.UserService;
@@ -34,9 +35,12 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public void saveApplication(String imageUrl, String fileUrl, String linkUrl, String applicationName, String desc, Integer userId) {
+        UserPo userPo = userService.getUser(userId);
+
         ApplicationPo applicationPo = new ApplicationPo();
         applicationPo.setApplicationName(applicationName);
         applicationPo.setUserId(userId);
+        applicationPo.setUserName(userPo.getUserName());
         applicationPo.setFileUrl(fileUrl);
         applicationPo.setImageUrl(imageUrl);
         applicationPo.setLinkUrl(linkUrl);
