@@ -14,9 +14,9 @@ public class ApplicationPo implements Serializable {
 
 	//column start
 	/**
-	 * appilcationId: appilcation_id
+	 * applicationId: application_id
 	 */
-	private Integer appilcationId;
+	private Integer applicationId;
 
 	/**
 	 * userId: user_id
@@ -71,12 +71,12 @@ public class ApplicationPo implements Serializable {
 	// column end
 
 
-	public Integer getAppilcationId() {
-		return this.appilcationId;
+	public Integer getApplicationId() {
+		return this.applicationId;
 	}
 
-	public void setAppilcationId(Integer value) {
-		this.appilcationId = value;
+	public void setApplicationId(Integer value) {
+		this.applicationId = value;
 	}
 
 	public Integer getUserId() {

@@ -115,7 +115,7 @@ public class BankServiceImpl implements BankService {
         ExchangeRecordPo po2 = new ExchangeRecordPo();
 
         po2.setUserId(applicationPo.getUserId());
-        po2.setUserName(userService.getUser(applicationPo.getUserId()).getUserName());
+        po2.setUserName(applicationPo.getUserName());
         po2.setApplicationId(appId);
         po2.setExhangeType(ExchangeTypeEnum.USE_APP.getType());
         po2.setApplicationName(applicationPo.getApplicationName());

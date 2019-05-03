@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sheffield.common.entity.po.ApplicationPo">
 	<resultMap id="BaseResultMap" type="com.sheffield.common.entity.po.ApplicationPo">
-		<id column="appilcation_id" property="appilcationId" />
+		<id column="application_id" property="applicationId" />
 		<result column="user_id" property="userId" />
 		<result column="user_name" property="userName" />
 		<result column="application_name" property="applicationName" />
@@ -20,7 +20,7 @@
 	</sql>
 
 	<sql id="Base_Column">
-		appilcation_id,
+		application_id,
 		user_id,
 		user_name,
 		application_name,
@@ -35,8 +35,8 @@
 
 	<sql id="Base_Where">
 	    <trim prefixOverrides="AND">
-		  <if test="appilcationId != null">
-            AND appilcation_id = #{appilcationId}
+		  <if test="applicationId != null">
+            AND application_id = #{applicationId}
 		  </if>
 		  <if test="userId != null">
             AND user_id = #{userId}
@@ -81,11 +81,11 @@
 		</where>
 	</sql>
 
-	<insert id="insert" parameterType="com.sheffield.common.entity.po.ApplicationPo" useGeneratedKeys="true" keyProperty="appilcationId">
+	<insert id="insert" parameterType="com.sheffield.common.entity.po.ApplicationPo" useGeneratedKeys="true" keyProperty="applicationId">
 	    insert into <include refid="Table_Name" />
         <trim prefix="(" suffix=")" suffixOverrides=",">
-          <if test="appilcationId != null">
-            appilcation_id,
+          <if test="applicationId != null">
+            application_id,
           </if>
           <if test="userId != null">
             user_id,
@@ -119,8 +119,8 @@
           </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-	      <if test="appilcationId != null">
-		    #{appilcationId},
+	      <if test="applicationId != null">
+		    #{applicationId},
 	      </if>
 	      <if test="userId != null">
 		    #{userId},
@@ -217,7 +217,7 @@
           is_deleted = #{isDeleted},
         </if>
 	    </set>
-	    where appilcation_id = #{appilcationId}
+	    where application_id = #{applicationId}
 	</update>
 	
 	<select id="count" parameterType="com.sheffield.common.entity.po.ApplicationPo" resultType="java.lang.Integer">
@@ -235,7 +235,7 @@
 	    select 
 	    <include refid="Base_Column" />
 	    from <include refid="Table_Name" />
-	    where appilcation_id = #{appilcationId}
+	    where application_id = #{applicationId}
 	</select>
 
 	<select id="selectList" parameterType="com.sheffield.common.entity.po.ApplicationPo" resultMap="BaseResultMap">
@@ -244,7 +244,7 @@
 	
 	<delete id="deleteById" parameterType="Integer">
 	    delete from <include refid="Table_Name" />
-        where appilcation_id = #{appilcationId}
+        where application_id = #{applicationId}
 	</delete>
 	
 </mapper>
