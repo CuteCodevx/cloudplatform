@@ -122,7 +122,7 @@
                     if(applistInfo[i].checkStatus == 0){
                         $('#applist').append(`
                                 <div class="w3-third w3-container w3-margin-bottom">
-                                    <a class="openProject"><img src=`+applistInfo[i].imageUrl+` alt="Norway" style="width:100%;height: 300px" class="w3-hover-opacity"></a>
+                                    <img src=`+applistInfo[i].imageUrl+` alt="Norway" style="width:100%;height: 300px" class="w3-hover-opacity">
                                     <div class="w3-container w3-white w3-center">
                                         <p><b>`+applistInfo[i].applicationName+`</b></p>
                                         <p>`+applistInfo[i].description+`</p>
@@ -130,6 +130,7 @@
                                     <span style="display: none" class="appId">`+applistInfo[i].applicationId+`</span>
                                     <button class="w3-button w3-black pass" style="display: none">Pass</button>
                                     <button class="w3-button w3-black delete" style="display: none">Delete</button>
+                                    <span class="w3-button w3-hover-grey w3-grey assess" style="display: inline">Assessing</span>
                                 </div>
                             `);
 
@@ -137,23 +138,20 @@
                         //already checked
                         $('#applist').append(`
                                 <div class="w3-third w3-container w3-margin-bottom">
-                                    <a href=`+applistInfo[i].linkUrl +` class="openProject"><img src=`+applistInfo[i].imageUrl+` alt="Norway" style="width:100%;height: 300px" class="w3-hover-opacity"></a>
+                                   <img src=`+applistInfo[i].imageUrl+` alt="Norway" style="width:100%;height: 300px" class="w3-hover-opacity">
                                     <div class="w3-container w3-white w3-center">
                                         <p><b>`+applistInfo[i].applicationName+`</b></p>
                                         <p>`+applistInfo[i].description+`</p>
                                     </div>
-                                     <span style="display: none" class="checkedAppId">`+applistInfo[i].applicationId+`</span>
-                                    <a class="w3-red w3-button browse">Browse</a>
+                                    <span style="display: none" class="checkedAppId">`+applistInfo[i].applicationId+`</span>
+                                    <a href=`+applistInfo[i].linkUrl +` class="w3-red w3-button browse">Browse</a>
+                                    <button class="w3-button w3-black deleteApp" style="display: none">Delete</button>
                                 </div>
                             `);
 
                     }
 
                 }
-
-                $('.openProject[i]').click(function () {
-                    console.log("tha a be clicked");
-                });
 
                 $('#total').text(info.navigatepageNums.length);
                 $('#next').click(function(){
@@ -186,12 +184,15 @@
             //alert(data);
             if(data.code == 200){
                 alert("upload success");
+                location.href="index";
             }
         });
         //admin
         if(role == 1){
             $('.pass').css("display","inline");
             $('.delete').css("display","inline");
+            $('.assess').css("display","none");
+            $('.deleteApp').css("display","inline");
         }
 
         $(".pass").each(function (index,element) {
@@ -206,6 +207,7 @@
                     }
 
                 })
+                location.href="index";
             })
         })
 
@@ -222,6 +224,22 @@
                     }
 
                 })
+                location.href="index";
+            })
+        })
+
+        $(".deleteApp").each(function (index) {
+            $(this).click(function () {
+                var appId = $('.checkedAppId')[index].innerHTML;
+                $.ajax({
+                    url: 'deleteApplication?appId=' + appId,
+                    type: 'get',
+                    success: function (data) {
+                        alert("delete successful");
+                    }
+
+                })
+                location.href="index";
             })
         })
         
@@ -239,6 +257,7 @@
                 })
             })
         })
+
     });
 </script>
 </body>
