@@ -1,6 +1,9 @@
 package com.sheffield.login.controller;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -40,7 +43,7 @@ public class LoginController {
 
     @PostMapping("login")
     @ResponseBody
-    public ActionResult<String> login(HttpSession session, @RequestParam String userName, @RequestParam String password) {
+    public ActionResult<String> login(HttpSession session, HttpServletResponse response, @RequestParam String userName, @RequestParam String password) {
         ActionResult.Builder<String> builder = new ActionResult.Builder<>();
         ActionResult<UserPo> login = userService.login(userName, password);
 
@@ -50,16 +53,31 @@ public class LoginController {
         session.setAttribute("userId", login.getData().getUserId());
         session.setAttribute("userName", login.getData().getUserName());
         session.setAttribute("role", login.getData().getRole());
+
+        Cookie cookie = new Cookie("userName", login.getData().getUserName());
+        cookie.setMaxAge(12*3600);
+        cookie.setPath("/");
+        response.addCookie(cookie);
         return builder.build();
     }
 
     @GetMapping("loginOut")
-    public ModelAndView loginOut(HttpSession session){
+    public ModelAndView loginOut(HttpSession session, HttpServletRequest request, HttpServletResponse response){
         Integer userId = (Integer) session.getAttribute("userId");
 
         session.removeAttribute("userId");
         session.removeAttribute("userName");
         session.removeAttribute("role");
+
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie : cookies) {
+            if ("userName".equals(cookie.getName())) {
+                Cookie cookie2 = new Cookie(cookie.getName(), "");
+                cookie.setPath("/");
+                cookie.setMaxAge(0);
+                response.addCookie(cookie2);
+            }
+        }
 
         userService.loginOut(userId);
 
@@ -73,7 +91,7 @@ public class LoginController {
 
     @PostMapping("register")
     @ResponseBody
-    public ActionResult<String> register(HttpSession session, @RequestParam String userName, @RequestParam String password) {
+    public ActionResult<String> register(HttpSession session, HttpServletResponse response, @RequestParam String userName, @RequestParam String password) {
         ActionResult.Builder<String> builder = new ActionResult.Builder<>();
         ActionResult<UserPo> register = userService.register(userName, password);
 
@@ -83,6 +101,11 @@ public class LoginController {
         session.setAttribute("userId", register.getData().getUserId());
         session.setAttribute("role", register.getData().getRole());
         session.setAttribute("userName", register.getData().getUserName());
+
+        Cookie cookie = new Cookie("userName", register.getData().getUserName());
+        cookie.setMaxAge(12*3600);
+        cookie.setPath("/");
+        response.addCookie(cookie);
         return builder.build();
     }
 

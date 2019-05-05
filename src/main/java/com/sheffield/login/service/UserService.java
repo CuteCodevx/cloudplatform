@@ -22,6 +22,8 @@ public interface UserService {
      */
     boolean isOnline(Integer userId);
 
+    UserPo getUserByName(String userName);
+
     /**
      * 获取用户信息
      *

@@ -31,6 +31,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserPo getUserByName(String userName) {
+        UserPo param = new UserPo();
+        param.setUserName(userName);
+
+        return baseDao.selectOne(param);
+    }
+
+    @Override
     public UserPo getUser(Object userId) {
         return baseDao.selectById(UserPo.class, userId);
     }
