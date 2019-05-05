@@ -24,7 +24,7 @@
         <a href="loginOut" class="w3-bar-item w3-button" th:if="${session.userId}">Log out</a>
         <!--<a href="login" class="w3-bar-item w3-button"  th:unless="${session.userId != null}" >Login</a>-->
         <!--<a href="register" class="w3-bar-item w3-button"  th:unless="${session.userId != null}" >Register</a>-->
-        <a href="/toBank" class="w3-bar-item w3-button w3-black" th:if="${session.userId}">My Bank</a>
+        <a href="toBank" class="w3-bar-item w3-button w3-black" th:if="${session.userId}">My Bank</a>
     </div>
 </header>
 
@@ -34,7 +34,7 @@
         <a href="index" class="w3-bar-item w3-button">Home</a>
         <a class="w3-bar-item" th:if="${session.userId}" th:text="${session.userName}"></a>
         <a href="loginOut" class="w3-bar-item w3-button" th:if="${session.userId}">Log out</a>
-        <a href="/toBank" class="w3-bar-item w3-button w3-black">My Bank</a>
+        <a href="toBank" class="w3-bar-item w3-button w3-black">My Bank</a>
     </div>
 </div>
 <section class="w3-container w3-content" style="max-width:1400px;margin-top:80px">
@@ -54,16 +54,24 @@
             <hr>
             <ul class="w3-ul w3-center" id="thead" style="width:100%">
                 <li class="w3-bar" id="showPage">
-                    <a href="/toBank" class="w3-bar-item w3-button w3-hover-black" id="prev">« prev</a>
+                    <a href="toBank" class="w3-bar-item w3-button w3-hover-black" id="prev">« prev</a>
                     <a class="w3-bar-item"><span id="pageNumber"></span>/<span id="total"></span></a>
-                    <a href="/toBank" class="w3-bar-item w3-button w3-hover-black" id="nextpage">next »</a>
+                    <a href="toBank" class="w3-bar-item w3-button w3-hover-black" id="nextpage">next »</a>
                 </li>
             </ul>
 
         </div>
     </div>
 </section>
-<footer th:include="@{/footer} :: footerInfo"></footer>
+<footer class="w3-container w3-light-grey w3-padding-16 w3-margin-top" >
+    <div class="w3-container w3-center w3-small">
+        <p>© 2019 QIAN Wei, Department of Computer Science, University of Sheffield</p>
+        <p>qwei4@sheffield</p>
+        <p>16, Warrington Road,</p>
+        <p>Sheffield, United Kingdom</p>
+        <p>S10 1EN</p>
+    </div>
+</footer>
 <script>
     $(function () {
         var pagenum=0;
