@@ -45,11 +45,13 @@ public class LoginInterceptor implements HandlerInterceptor {
             for (Cookie cookie : cookies) {
                 if ("userName".equals(cookie.getName())) {
                     UserPo userPo = userService.getUser(cookie.getName());
-                    userService.login(userPo.getUserName(), userPo.getPassword());
-                    httpServletRequest.setAttribute("userId", userPo.getUserId());
-                    httpServletRequest.setAttribute("userName", userPo.getUserName());
-                    httpServletRequest.setAttribute("role", userPo.getRole());
-                    return true;
+                    if (userPo != null) {
+                        userService.login(userPo.getUserName(), userPo.getPassword());
+                        httpServletRequest.setAttribute("userId", userPo.getUserId());
+                        httpServletRequest.setAttribute("userName", userPo.getUserName());
+                        httpServletRequest.setAttribute("role", userPo.getRole());
+                        return true;
+                    }
                 }
             }
             httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/login");
