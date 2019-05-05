@@ -66,7 +66,7 @@ public class AppUploadController {
                 String fileName = UUID.randomUUID().toString().replace("-", "") + "-" + appFile.getOriginalFilename();
                 executeUpload(fileDir + fileName, appFile);
                 executeUpload(imageDir + imageName, imageFile);
-                String url = serverConfig.getUrl() + staticAccessPath.replace("*", "");
+                String url = serverConfig.getUrl() + "cloudplatform/" + staticAccessPath.replace("*", "");
                 String imageUrl = url + "/image/" + imageName;
                 String fileUrl = url + "/file/" + fileName;
                 applicationService.saveApplication(imageUrl, fileUrl, linkUrl, applicationName, desc, userId);
