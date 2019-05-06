@@ -12,13 +12,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import com.sheffield.common.entity.po.UserPo;
 import com.sheffield.login.service.UserService;
 
-/**
- * 
- *
- * @author:
- * @since:
- * @version 1.0
- */
 @Component
 public class LoginInterceptor implements HandlerInterceptor {
 
@@ -44,7 +37,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             Cookie[] cookies = httpServletRequest.getCookies();
             for (Cookie cookie : cookies) {
                 if ("userName".equals(cookie.getName())) {
-                    UserPo userPo = userService.getUser(cookie.getName());
+                    UserPo userPo = userService.getUserByName(cookie.getValue());
                     if (userPo != null) {
                         userService.login(userPo.getUserName(), userPo.getPassword());
                         httpServletRequest.setAttribute("userId", userPo.getUserId());
@@ -52,6 +45,8 @@ public class LoginInterceptor implements HandlerInterceptor {
                         httpServletRequest.setAttribute("role", userPo.getRole());
                         return true;
                     }
+                }else{
+                    System.out.print(1);
                 }
             }
             httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/login");

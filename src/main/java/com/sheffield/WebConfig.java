@@ -12,13 +12,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.sheffield.interceptor.LoginInterceptor;
 
-/**
- * 
- *
- * @author: wuyifan
- * @since: 2019年05月01日 19:38
- * @version 1.0
- */ 
 @Configuration
 public class WebConfig implements WebMvcConfigurer  {
 

@@ -19,13 +19,6 @@ import com.sheffield.common.enums.IncomeTypeEnum;
 import com.sheffield.common.enums.RoleTypeEnum;
 import com.sheffield.login.service.UserService;
 
-/**
- * 
- *
- * @author: wuyifan
- * @since: 2019年05月03日 20:36
- * @version 1.0
- */ 
 @Service
 public class BankServiceImpl implements BankService {
 
@@ -71,7 +64,7 @@ public class BankServiceImpl implements BankService {
         Map<String, Object> map = new HashMap<>();
         map.put("userId", userId);
         map.put("count", 5L);
-        // 扣除使用者的金额
+        // Deduct the amount of the user
         baseDao.update(UserPo.class, "deductCount", map);
     }
 
@@ -87,7 +80,7 @@ public class BankServiceImpl implements BankService {
             return;
         }
 
-        // 保存交易信息
+        // save transaction information
         ExchangeRecordPo po = new ExchangeRecordPo();
         UserPo userPo = userService.getUser(userId);
         po.setUserId(userId);
@@ -104,14 +97,14 @@ public class BankServiceImpl implements BankService {
         Map<String, Object> map = new HashMap<>();
         map.put("userId", userId);
         map.put("count", 3L);
-        // 扣除使用者的金额
+        // Deduct the amount of the user
         baseDao.update(UserPo.class, "deductCount", map);
 
-        // 增加应用持有者的余额
+        // Add the balance for application developer
         map.put("userId", applicationPo.getUserId());
         baseDao.update(UserPo.class, "addCount", map);
 
-        // 增加app持有者的交易记录
+        // Add the transaction record for application developer
         ExchangeRecordPo po2 = new ExchangeRecordPo();
 
         po2.setUserId(applicationPo.getUserId());

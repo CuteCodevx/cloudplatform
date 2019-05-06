@@ -18,13 +18,6 @@ import com.sheffield.common.entity.po.UserPo;
 import com.sheffield.common.result.ActionResult;
 import com.sheffield.login.service.UserService;
 
-/**
- *
- *
- * @author: wuyifan
- * @since: 2019年05月01日 19:07
- * @version 1.0
- */
 @Controller
 public class LoginController {
 
@@ -73,8 +66,8 @@ public class LoginController {
         for (Cookie cookie : cookies) {
             if ("userName".equals(cookie.getName())) {
                 Cookie cookie2 = new Cookie(cookie.getName(), "");
-                cookie.setPath("/");
-                cookie.setMaxAge(0);
+                cookie2.setPath("/");
+                cookie2.setMaxAge(0);
                 response.addCookie(cookie2);
             }
         }

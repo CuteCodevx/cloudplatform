@@ -1,12 +1,5 @@
 package com.sheffield.common.enums;
 
-/** 
- * 
- *
- * @author: wuyifan
- * @since: 2019年05月01日 19:20
- * @version 1.0
- */ 
 public enum LoginStatusEnum {
 
     ONLINE(1),OFFLINE(0);

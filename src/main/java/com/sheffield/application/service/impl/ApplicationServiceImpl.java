@@ -14,13 +14,6 @@ import com.sheffield.common.enums.CheckStatusEnum;
 import com.sheffield.common.enums.RoleTypeEnum;
 import com.sheffield.login.service.UserService;
 
-/**
- * 
- *
- * @author: wuyifan
- * @since: 2019年05月02日 17:59
- * @version 1.0
- */ 
 @Service
 public class ApplicationServiceImpl implements ApplicationService {
 

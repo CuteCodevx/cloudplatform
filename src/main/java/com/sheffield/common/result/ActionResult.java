@@ -6,22 +6,18 @@ import com.alibaba.fastjson.JSONObject;
 
 
 /**
- * 接口返回值封装
- * 
- * @param <T>
- * @author caowuchao
- * @since 2018年11月7日
- * @version 1.0
+ * Interface return value encapsulation
+ *
  */
 public class ActionResult<T> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	/** 状态码 */
+	/** status code */
 	private int code;
-	/** 消息 */
+	/** message */
 	private String message;
-	/** 数据 */
+	/** data */
 	private T data;
 
 	private ActionResult(Builder<T> builder) {
@@ -67,11 +63,11 @@ public class ActionResult<T> implements Serializable {
 	}
 
 	public static class Builder<T> {
-		/** 状态码 */
+		/** status code */
 		private int code;
-		/** 消息 */
+		/** message */
 		private String message;
-		/** 数据 */
+		/** data */
 		private T data;
 		
 		public Builder() {}

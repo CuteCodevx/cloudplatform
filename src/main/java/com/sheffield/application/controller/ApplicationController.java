@@ -14,13 +14,6 @@ import com.sheffield.common.entity.po.ApplicationPo;
 import com.sheffield.common.entity.po.ExchangeRecordPo;
 import com.sheffield.common.result.ActionResult;
 
-/**
- * 
- *
- * @author: wuyifan
- * @since: 2019年05月02日 17:57
- * @version 1.0
- */
 @Controller
 public class ApplicationController {
 

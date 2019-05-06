@@ -45,7 +45,7 @@ public class AppUploadController {
                                 String linkUrl) {
         ActionResult.Builder<String> builder = new ActionResult.Builder<>();
         try {
-            //上传目录地址
+            //upload address
             String imageDir = uploadFolder + "/image/";
             String fileDir = uploadFolder + "/file/";
             HttpSession session = request.getSession();
@@ -66,7 +66,7 @@ public class AppUploadController {
                 String fileName = UUID.randomUUID().toString().replace("-", "") + "-" + appFile.getOriginalFilename();
                 executeUpload(fileDir + fileName, appFile);
                 executeUpload(imageDir + imageName, imageFile);
-                String url = serverConfig.getUrl() + "cloudplatform/" + staticAccessPath.replace("*", "");
+                String url = "http://143.167.9.235:8080/cloudplatform/" + staticAccessPath.replace("*", "");
                 String imageUrl = url + "/image/" + imageName;
                 String fileUrl = url + "/file/" + fileName;
                 applicationService.saveApplication(imageUrl, fileUrl, linkUrl, applicationName, desc, userId);
@@ -74,7 +74,7 @@ public class AppUploadController {
 
 
         }catch (Exception e) {
-            //打印错误堆栈信息
+            //print stacktrace
             e.printStackTrace();
             return builder.code(ResultType.FAILURE.code()).message("upload file error").build();
         }
@@ -83,9 +83,9 @@ public class AppUploadController {
     }
 
     private void executeUpload(String fileUrl, MultipartFile file) throws Exception {
-        //服务器端保存的文件对象
+        //A file object saved on the server side
         File serverFile = new File(fileUrl);
-        //将上传的文件写入到服务器端文件内
+        //Write the uploaded file to a server-side file
         file.transferTo(serverFile);
     }
 

@@ -3,13 +3,6 @@ package com.sheffield.application.service;
 import com.github.pagehelper.PageInfo;
 import com.sheffield.common.entity.po.ApplicationPo;
 
-/**
- * 
- *
- * @author: wuyifan
- * @since: 2019年05月02日 17:57
- * @version 1.0
- */ 
 public interface ApplicationService {
 
     void saveApplication(String imageUrl,

@@ -2,12 +2,6 @@ package com.sheffield.common.entity.po;
 
 import java.io.Serializable;
 
-/**
- * application
- * 
- * @since 2018年11月2日
- * @version 1.0
- */
 public class ApplicationPo implements Serializable {
 
 	private static final long serialVersionUID = 1L;

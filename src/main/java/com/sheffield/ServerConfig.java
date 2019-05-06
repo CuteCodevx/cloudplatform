@@ -12,13 +12,6 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
-/**
- * 
- *
- * @author: wuyifan
- * @since: 2019年05月03日 0:44
- * @version 1.0
- */
 @Component
 public class ServerConfig  implements ApplicationListener<WebServerInitializedEvent> {
 

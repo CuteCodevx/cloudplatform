@@ -11,13 +11,6 @@ import com.sheffield.common.result.ActionResult;
 import com.sheffield.common.result.ResultType;
 import com.sheffield.login.service.UserService;
 
-/**
- *
- *
- * @author: wuyifan
- * @since: 2019年05月01日 19:19
- * @version 1.0
- */
 @Service
 public class UserServiceImpl implements UserService {
 
